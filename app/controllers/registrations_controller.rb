@@ -3,9 +3,9 @@ class RegistrationsController < ApplicationController
         @user = User.new
     end
     def create
-        # render plain: params[:user] # {"email"=>"sdfsd", "password"=>"sds", "password_confirmation"=>"sd"}
         @user = User.new(user_params)
         if @user.save
+            session[:user_id] = @user.id
             redirect_to root_path, notice: "Successfully created account:"
        
         else
