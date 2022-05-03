@@ -1,16 +1,22 @@
 <h1>Sign In</h1>
 <%= form_with url: sign_in_path do |form| %>
-    <div class="col-md-6">
-        <%= form.label :email %>
-        <%= form.text_field :email, class: "form-control", placeholder: "example@gmail.com" %>
-    </div>
-    <div class="col-md-6">
-        <%= form.label :password %>
-        <%= form.password_field :password, class: "form-control" %>
+    <div class="row col-md-6">
+        <%= form.label :email, class: "col-sm-2 col-form-label" %>
+        <div class="col-sm-10">     
+            <%= form.text_field :email, class: "form-control", placeholder: "example@gmail.com" %>
+        </div>
+    </div><br>
+
+    <div class="row col-md-6">
+        <%= form.label :password, class: "col-sm-2 col-form-label" %>
+        <div class="col-sm-10">     
+            <%= form.password_field :password, class: "form-control" %>
+        </div>
     </div><br>
     
     <div class="col-md-6">
+      <div class="col-sm-10">  
         <%= form.submit  "Sign In" , class: "btn btn-primary" %>
-         <%=  link_to  "Back", root_path, class: "btn btn-warning" %>
+        <%=  link_to  "Back", root_path, class: "btn btn-warning" %>
     </div>
 <% end %>
