@@ -1,0 +1,15 @@
+<h1>Posts List</h1>
+<ul>
+    <% @posts.each do |post| %>
+    <li>
+        =begin
+        <a href="/posts/<%=  post.id %>">
+            <%= post.title %>
+        </a>
+        =end 
+
+         <%= link_to post.title, post %>
+              
+    </li>
+    <% end %>
+</ul>

@@ -13,5 +13,10 @@ Rails.application.routes.draw do
   patch "password", to: "passwords#update"
   
   delete "logout", to: "sessions#destory"
+
+  # get "posts", to: "posts#index"
+  # get "posts/:id", to: "posts#show"
+
+  resources :posts
  
 end
