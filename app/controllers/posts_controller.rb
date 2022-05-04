@@ -25,6 +25,7 @@ class PostsController < ApplicationController
 
     def edit
         @post = Post.find_by(params[:id])
+
         if @post.update(post_params)
             redirect_to @post
         else
@@ -33,8 +34,10 @@ class PostsController < ApplicationController
     end
 
     def destory
-        @post = Post.find_by(parma[:id])
+        @post = Post.find_by(parmas[:id])
         @post.destory
+
+        redirect_to root_path, status: see_other
     end
     
     private

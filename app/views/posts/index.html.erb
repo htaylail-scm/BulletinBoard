@@ -2,14 +2,7 @@
 <ul>
     <% @posts.each do |post| %>
     <li>
-        =begin
-        <a href="/posts/<%=  post.id %>">
-            <%= post.title %>
-        </a>
-        =end 
-
-         <%= link_to post.title, post %>
-              
+        <%= link_to post.title, post %>              
     </li>
     <% end %>
 </ul>
