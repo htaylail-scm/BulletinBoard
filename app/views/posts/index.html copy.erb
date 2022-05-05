@@ -2,15 +2,12 @@
     <h4 class="mt-4 display-4">Post Lists</h4>
     <div style="display: flex;justify-content: flex-end; ">
      
-    <%= form_tag(posts_path, :method => 'get') do %>
-      <%= text_field_tag :search, "",  {class: "search_field_type"}%>
-      <%= submit_tag 'Search', :name => nil, class: "search_field_btn" %>
-    <% end %>
-    
+  
       <%= link_to 'Add', new_post_path , class: "btn btn-success" %>
       <%= link_to 'Upload', class: "btn btn-success" %>
       <%= link_to 'Download', class: "btn btn-success" %>
     </div>
+  <% if @posts.present? %>
     <div class="row justify-content-center">
       <table class="table table-bordered">
         <thead>
@@ -39,7 +36,12 @@
       </table>
       <%= will_paginate @posts, list_classes: %w(pagination justify-content-center) %>
     </div>
-  
+  <% else %>
+    <div class="p-3 mb-2 bg-light text-dark">
+      <span class="text-info font-weight-bold">Welcome! </span>
+      Create your first post
+    </div> 
+  <% end %>
 </div>
 
 

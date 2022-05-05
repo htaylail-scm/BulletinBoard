@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row justify-content-center">
-    <h4 class="mt-4 mb-4 display-4">New Post</h4>
+    <h4 class="mt-4 mb-4 display-4">Create Post Confirmation</h4>
   </div>
   <div class="row justify-content-center">
     <%= form_with scope: :post, url: posts_path, local: true do |form| %>
@@ -22,8 +22,8 @@
 
      
       <div class="col-sm-10">  
-        <%= button_to "Confirm", class: 'btn btn-primary' %>
-        <%=  link_to  "Clear", posts_path, class: "btn btn-warning" %>
+        <%= button_to "Create", class: "btn btn-primary" %>
+        <%=  link_to  "Cancel", posts_path, class: "btn btn-warning" %>
       </div>
     <% end %>
   </div>

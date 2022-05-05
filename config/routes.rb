@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   # get 'posts/edit'
   # get "posts", to: "posts#index"
 
-  # get "posts/new/confirm", to:"posts#new", as: :new_confirm_post_path
   resources :posts
- 
+  post 'posts/confirm', to: 'posts#new_confirm', as: 'confrirm_new'
+  post 'posts/confirm', to: 'posts#edit_confirm', as: 'confrirm_edit'
+
+
 end
