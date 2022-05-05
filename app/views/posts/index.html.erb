@@ -1,7 +1,12 @@
 <div class="container">
     <h4 class="mt-4 display-4">Post Lists</h4>
     <div style="display: flex;justify-content: flex-end; ">
-        <input type="text">
+        # <input type="text">
+        
+        <%= form_tag(posts_path, :method => "get", id: "search-form") do %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search Posts" %>
+          <%= submit_tag "Search" %>
+          <% end %>
         <%= link_to 'Search',  class: "btn btn-success" %>
         <%= link_to 'Add', new_post_path , class: "btn btn-success" %>
         <%= link_to 'Upload', class: "btn btn-success" %>
@@ -12,6 +17,7 @@
       <table class="table table-bordered">
         <thead>
           <tr>
+            <th scope="col">No</th>
             <th scope="col">Post Title</th>
             <th scope="col">Post Description</th>
             <th scope="col">Post User</th>
@@ -22,7 +28,7 @@
         <tbody>
           <% @posts.each do |post| %>
             <tr> 
-             
+              <td> No </td>
               <td><%=link_to post.title, post %></td>
               <td><%= post.description %></td>
               <td> user</td>
