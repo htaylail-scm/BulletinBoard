@@ -18,10 +18,12 @@ Rails.application.routes.draw do
 
 
   # get 'posts/index'
-  get 'posts/show'
-  get 'posts/new'
-  get 'posts/edit'
-  get "posts", to: "posts#index"
+  # get 'posts/show'
+  # get 'posts/new'
+  # get 'posts/edit'
+  # get "posts", to: "posts#index"
+
+  # get "posts/new/confirm", to:"posts#new", as: :new_confirm_post_path
   resources :posts
  
 end
