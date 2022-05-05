@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   root "main#index"
 
   get "about", to: "about#index"
@@ -14,10 +16,12 @@ Rails.application.routes.draw do
   
   delete "logout", to: "sessions#destory"
 
-  # get "posts", to: "posts#index"
-  # get "posts/:id", to: "posts#show"
-  # get "posts/new", to: "posts#new", as: :new_post
 
+  # get 'posts/index'
+  get 'posts/show'
+  get 'posts/new'
+  get 'posts/edit'
+  get "posts", to: "posts#index"
   resources :posts
  
 end

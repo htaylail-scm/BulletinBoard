@@ -1,48 +1,40 @@
 class PostsController < ApplicationController
-    def index
-        @posts = Post.all
-    end 
-    
-    def show
-        @post = Post.find_by(params[:id])
-    end
+  def index
+    @posts = Post.paginate(page: params[:page], per_page: 3)
 
-    def new
-        @post = Post.new
-    end
+  end
 
-    def create
-        # @post = Post.new(title: "...", description: "..")
-        @post = Post.new(post_params)
+  def show
+    @post = Post.find(params[:id])
+  end
 
-        if @post.save 
-            redirect_to @post
-        else
-            render :new, status: :unprocessabel_entity
-            # render :new
-        end
-    end
+  def new
+  end
 
-    def edit
-        @post = Post.find_by(params[:id])
+  def update
+    post = Post.find(params[:id])
+    post.update (post_params)
 
-        if @post.update(post_params)
-            redirect_to @post
-        else
-            render :edit, status: :unprocessabel_entity
-        end
-    end
+    redirect_to posts_path
+  end
 
-    def destory
-        @post = Post.find_by(parmas[:id])
-        @post.destory
+  def destroy
+    post = Post.find(params[:id])
+    post.destroy
+    redirect_to posts_path
+  end
 
-        redirect_to root_path, status: see_other
-    end
-    
-    private
-    def post_params
-        params.require(:post).permit(:title, :description)
-    end
+  def edit
+    @post = Post.find(params[:id])
+  end
 
+  def create
+    post = Post.new(post_params)
+    post.save
+    redirect_to posts_path
+  end
+  private
+  def post_params
+      params.require(:post).permit(:title, :description)
+  end
 end

@@ -2,10 +2,8 @@
 
 one:
   title: MyString
-  description: MyText
-  status: 1
+  description: MyString
 
 two:
   title: MyString
-  description: MyText
-  status: 1
+  description: MyString
