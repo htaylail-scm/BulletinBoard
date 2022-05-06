@@ -2,11 +2,12 @@
     <h4 class="mt-4 display-4">Post Lists</h4>
     <div style="display: flex;justify-content: flex-end; ">
      
-      <%= form_tag(posts_path, :method => 'get') do %>
-        <%= text_field_tag :search, "",  {class: "search_field_type"}%>
+      <%= form_tag posts_path, :method => 'get' do %>
+        <%= text_field_tag :search, params[:search],  class: "search_field_type" %>
         <%= submit_tag 'Search', :name => nil, class: "search_field_btn" %>
       <% end %>
-      
+
+  
       <%= link_to 'Add', new_post_path , class: "btn btn-success" %>
       <%= link_to 'Download', posts_download_path(format: :csv), class: "btn btn-success" %> 
 
