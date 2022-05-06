@@ -16,16 +16,21 @@ Rails.application.routes.draw do
   
   delete "logout", to: "sessions#destory"
 
-
-  # get 'posts/index'
-  # get 'posts/show'
-  # get 'posts/new'
-  # get 'posts/edit'
-  # get "posts", to: "posts#index"
-
   resources :posts
   post 'posts/confirm', to: 'posts#new_confirm', as: 'confrirm_new'
   post 'posts/confirm', to: 'posts#edit_confirm', as: 'confrirm_edit'
 
+  # post 'posts/upload', to: 'posts#upload'
+  # resources :posts do 
+  #   collection {post :import }
+  # end
+  post 'posts/download', to: 'posts#download', as: 'posts_download'
+  post 'posts/upload', to: 'posts#upload'
 
+
+  resources :posts, only: [:new, :create, :show] do
+    collection do #This is important
+      post :confirm #This is important
+    end
+  endx
 end
