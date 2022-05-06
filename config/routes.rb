@@ -8,17 +8,21 @@ Rails.application.routes.draw do
   get "sign_up", to: "registrations#new"
   post "sign_up", to: "registrations#create"
 
-  get "sign_in", to: "sessions#new"
-  post "sign_in", to: "sessions#create"
+  # get "sign_in", to: "sessions#new"
+  # post "sign_in", to: "sessions#create"
+  get "user/login", to: "sessions#new"
+  post "user/login", to: "sessions#create"
 
-  get "password", to: "passwords#edit", as: :edit_password
-  patch "password", to: "passwords#update"
+
+  get "user/password", to: "passwords#edit", as: :edit_password
+  patch "user/password", to: "passwords#update"
   
   delete "logout", to: "sessions#destory"
 
   resources :posts
-  post 'posts/confirm', to: 'posts#new_confirm', as: 'confrirm_new'
-  post 'posts/confirm', to: 'posts#edit_confirm', as: 'confrirm_edit'
+
+  # post 'posts/confirm', to: 'posts#new_confirm', as: 'confrirm_new'
+  # post 'posts/confirm', to: 'posts#edit_confirm', as: 'confrirm_edit'
 
   # post 'posts/upload', to: 'posts#upload'
   # resources :posts do 
@@ -28,9 +32,4 @@ Rails.application.routes.draw do
   post 'posts/upload', to: 'posts#upload'
 
 
-  resources :posts, only: [:new, :create, :show] do
-    collection do #This is important
-      post :confirm #This is important
-    end
-  endx
 end

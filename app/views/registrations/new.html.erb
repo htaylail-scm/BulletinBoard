@@ -11,6 +11,10 @@
             </div>
         <% end %>
         <div class="col-md-6">
+            <%= form.label :nmae %>
+            <%= form.text_field :name, class: "form-control", placeholder: "example@gmail.com" %>
+        </div>
+        <div class="col-md-6">
             <%= form.label :email %>
             <%= form.text_field :email, class: "form-control", placeholder: "example@gmail.com" %>
         </div>
