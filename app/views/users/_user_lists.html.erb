@@ -1,0 +1,15 @@
+<tr> 
+    <td><%=link_to user.name, user %></td>
+    <td><%= user.email %></td>
+    <td><%= user.create_user_id %></td>
+    <td><%= user.phone %></td>
+    <td><%= user.dob %></td>
+    <td><%= user.address %></td>            
+    <td> <%= user.created_at.strftime("%Y/%m/%d") %></td>
+    <td> <%= user.updated_at.strftime("%Y/%m/%d") %></td>
+    <td><%= link_to "Delete", user_path(user.id),
+            method: :delete, data: {confirm: "Are you sure?"} %>   
+    </td>
+</tr>
+
+<%= render ,@user %>

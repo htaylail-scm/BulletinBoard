@@ -3,13 +3,8 @@
     <h4 class="mt-4 mb-4 display-4">Edit Post</h4>
   </div>
   <div class="row justify-content-center">
-<<<<<<< HEAD
     <%= form_with scope: :post, url: confirm_update_path(params[:id]),  local: true do |form| %>
       # form_with model: @post, url: confirm_update_path do |form|  
-=======
-     <%= form_with scope: :post, url: confirm_update_path(params[:id]),  local: true do |form| %>
-
->>>>>>> 58112bfcc7287f40abdb122bab885700f0e38568
       <div class="form-group">
         <%= form.label :title %>
         <%= form.text_field :title, class: 'form-control' %>

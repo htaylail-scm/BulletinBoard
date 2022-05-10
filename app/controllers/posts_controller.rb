@@ -1,13 +1,29 @@
 class PostsController < ApplicationController
 
-  def index 
-    @posts = Post.paginate(page: params[:page], per_page: 10)
-    # @posts = Post.all
-    respond_to do |format|
-      format.html
-      format.csv { send_data @posts.to_csv(['title','description','status'])} 
-    end
+  # def index 
+  #   @posts = Post.paginate(page: params[:page], per_page: 10)
+  #   # @posts = Post.all
+    # respond_to do |format|
+    #   format.html
+    #   format.csv { send_data @posts.to_csv(['title','description','status'])} 
+    # end
+  # end
+
+  def index
+      if params[:search]
+        @posts = Post.where(["email LIKE ? ","%#{params[:search]}%"])
+      else
+        @posts = Post.all
+      end
+      respond_to do |format|
+          format.html
+          format.csv { send_data @posts.to_csv(['title','description','status'])} 
+      end
+
   end
+
+
+ 
 
   def show
     @post = Post.find_by(params[:id])
@@ -55,110 +71,14 @@ class PostsController < ApplicationController
     @post.destroy
     redirect_to posts_path
   end
-<<<<<<< HEAD
 
-=======
-  
-  # def new
-  #   @post = Post.new
-  # end
-
-  # def confirm_create
-  #   @post = Post.new(post_params)
-  #   unless @post.valid?
-  #       render :new
-  #   end
-  # end
-
-  # def create
-  #   @post = Post.new(post_params)
-  #   @post.status = 1
-  #   @post.create_user_id = current_user.id
-  #   @post.updated_user_id = current_user.id
-
-  #   if @post.save
-  #     redirect_to posts_path, notice: "Post Created!"
-  #   else
-  #     render :new
-  #   end
-  # end
-
-  def edit
-    @post = Post.find(params[:id])
-  end
-
-  def confirm_update
-    @post = Post.find(params[:format])
-    # @post.updated_user_id = current_user.id
-     @post.update(post_params)
-     
-    if @post.update(post_params)
-      redirect_to posts_path, notice: "Post Updated!"
+  def search(search)
+    if search
+        where(["title LIKE ? ","%#{params[:search]}%"])
     else
-      render :edit
+        all
     end
   end
-
-  def update
-    post = Post.find_by(params[:id])    
-    post.update (post_params)
-
-  end
-
- 
-
-  # def confirm_update
-  #   @post = Post.find(params[:format])
-  #   # @post.updated_user_id = current_user.id
-  #   @post.update(post_params)
-  # end
-
-  # def update
-  #   # post = Post.find_by(params[:id])    
-  #   # post.update (post_params)
-  #   # redirect_to posts_path
-
-  #   @post = Post.find(params[:id])
-  #   # @post.updated_user_id = current_user.id
-
-  #   if @post.update(post_params)
-  #     redirect_to posts_path, notice: "Post Updated!"
-  #   else
-  #     render :edit
-  #   end
-  # end
-
-
-  # def edit
-  #   @post = Post.find(params[:id])
-  # end
-
-  # def confirm_update
-  #   @post = Post.new(post_update_params)
-  #   unless @post.valid?
-  #       render :edit
-  #   end
-  # end
-
-  # def update
-    # @post = Post.find(params[:id])
-    # @post.updated_user_id = current_user.id
-
-    # if @post.update(post_update_params)
-    #   redirect_to @post, notice: "Post Updated!"
-    # else
-    #   render :edit
-    # end
-  # end
-
-  
-  def destroy
-    post = Post.find_by(params[:id])
-    post.destroy
-    redirect_to posts_path
-  end
->>>>>>> 58112bfcc7287f40abdb122bab885700f0e38568
-
 
   def download
     @posts = Post.all
@@ -182,13 +102,10 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:title, :description)
   end
-<<<<<<< HEAD
 
   def post_update_params
     params.require(:post).permit(:title, :description, :status)
   end
  
-=======
->>>>>>> 58112bfcc7287f40abdb122bab885700f0e38568
 
 end

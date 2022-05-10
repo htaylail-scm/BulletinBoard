@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
 
     def index
-        @users = User.all
+        if params[:search]
+           @users = User.where(["email LIKE ? ","%#{params[:search]}%"])
+        else
+            @users = User.all
+        end
     end
 
     def show 
@@ -34,10 +38,23 @@ class UsersController < ApplicationController
         end      
     end
 
+
+    def eidt 
+        @user = User.find(params[:id])
+    end
+
     def destroy
         @user = User. find(params[:id])
         @user.destroy
         redirect_to users_path, notice: "User delete Successfully."
+    end
+
+    def search(search)
+        if search
+            where(["email LIKE ? ","%#{params[:search]}%"])
+        else
+            all
+        end
     end
     
 

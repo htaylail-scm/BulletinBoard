@@ -2,11 +2,10 @@
     <h4 class="mt-4 display-4">Post Lists</h4>
     <div style="display: flex;justify-content: flex-end; ">
      
-      <%= form_tag posts_path, :method => 'get' do %>
-        <%= text_field_tag :search, params[:search],  class: "search_field_type" %>
-        <%= submit_tag 'Search', :name => nil, class: "search_field_btn" %>
-      <% end %>
-
+    <%= form_tag posts_path, method: :get do %>
+      <%= text_field_tag :search, params[:search] %> 
+      <%= submit_tag "Search" %>
+    <% end %>
   
       <%= link_to 'Add', new_post_path , class: "btn btn-success" %>
       <%= link_to 'Download', posts_download_path(format: :csv), class: "btn btn-success" %> 
@@ -38,7 +37,7 @@
             <tr> 
               <td><%=link_to post.title, post %></td>
               <td><%= post.description %></td>
-              <td> user</td>
+              <td> post.create_user_id</td>
               <td> <%= post.created_at.strftime("%Y/%m/%d") %></td>
               <td><%= link_to 'Edit', edit_post_path(post.id) %></td> 
               <td><%= link_to "Delete", post_path(post.id),
@@ -49,7 +48,7 @@
         </tbody>
       </table>
     #  paginate page
-    <%= will_paginate @posts, list_classes: %w(pagination justify-content-center) %>
+    # will_paginate @posts, list_classes: %w(pagination justify-content-center)
     </div>
   
 </div>

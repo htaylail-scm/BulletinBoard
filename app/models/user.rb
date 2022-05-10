@@ -12,4 +12,7 @@ class User < ApplicationRecord
     
     # soft delete
     # acts_as_paranoid
+
+   
+
 end

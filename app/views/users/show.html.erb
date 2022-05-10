@@ -1,6 +1,4 @@
-
-
-<h4 class="mt-4 mb-4 display-4">Show details of user <%= @user.id %></h4>
+<h4 class="mt-4 mb-4 display-4">User Profile</h4>
 <div>
     <%= link_to "Edit", edit_user_path(@user), class: "btn btn-primary" %>
     <%= link_to "Change Password", edit_password_path(@user), class: "btn btn-primary" %>
@@ -9,10 +7,29 @@
         <label class="col-sm-2 col-form-label"> Name </label>
         <%= @user.name %>
     </div>
+
+    # image_tag @user.photo, style: 'width:100px;'
     
     <div class="col-md-6">
-    <label class="col-sm-2 col-form-label"> Email </label>
+        <label class="col-sm-2 col-form-label"> Email </label>
         <%= @user.email %>
     </div>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Type </label>
+        <%= @user.role %>
+    </div>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Phone </label>
+        <%= @user.phone %>
+    </div>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Date Of Birth </label>
+        <%= @user.dob %>
+    </div>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Address </label>
+        <%= @user.address %>
+    </div>
+
 </div>
 
