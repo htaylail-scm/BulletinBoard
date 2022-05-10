@@ -3,10 +3,14 @@
     <h4 class="mt-4 mb-4 display-4">Create Post</h4>
   </div>
   <div class="row justify-content-center">
-    <%= form_with scope: :post, url: confirm_new_path,  local: true do |form| %>
-      # form_with scope: :post, url: confrirm_new_path, local: true do |form| 
-      # form_with scope: :post, url: posts_path,  local: true do |form|
-
+    <%= form_with scope: :post, url: confirm_create_path,  local: true do |form| %>
+      <% if @post.errors.any? %>
+            <div class="alert alert-danger">
+                <% @post.errors.full_messages.each do |message| %>
+                <div><%= message %></div>
+            <% end %>
+            </div>
+        <% end %>
       <div class="row col-md-6">
         <%= form.label :title, class: "col-sm-2 col-form-label" %>
         <div class="col-sm-10">     

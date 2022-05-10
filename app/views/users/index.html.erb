@@ -1,0 +1,50 @@
+<div class="container">
+    <h4 class="mt-4 display-4">User Lists</h4>
+    
+  
+      <%= link_to 'Add', new_user_path , class: "btn btn-success" %>   
+      
+    </div>
+    <div class="row justify-content-center">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Created User</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Birth Date</th>
+            <th scope="col">Address</th>
+            <th scope="col">Created Date</th>
+            <th scope="col">Updated Date</th>
+            <th scope="col" >Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr> 
+              <td><%=link_to user.name, user %></td>
+              <td><%= user.email %></td>
+              <td><%= user.create_user_id %></td>
+              <td><%= user.phone %></td>
+              <td><%= user.dob %></td>
+              <td><%= user.address %></td>            
+              <td> <%= user.created_at.strftime("%Y/%m/%d") %></td>
+              <td> <%= user.updated_at.strftime("%Y/%m/%d") %></td>
+              <td><%= link_to "Delete", user_path(user.id),
+                     method: :delete, data: {confirm: "Are you sure?"} %>   
+              </td>
+
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    #  paginate page
+    </div>
+  
+</div>
+
+
+
+
+
