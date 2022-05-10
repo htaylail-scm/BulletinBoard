@@ -12,7 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2022_05_04_015440) do
 
+<<<<<<< HEAD
   create_table "posts", charset: "utf8mb3", force: :cascade do |t|
+=======
+  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> 58112bfcc7287f40abdb122bab885700f0e38568
     t.string "title"
     t.text "description"
     t.integer "status", default: 1
@@ -20,6 +24,7 @@ ActiveRecord::Schema.define(version: 2022_05_04_015440) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+<<<<<<< HEAD
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -35,6 +40,14 @@ ActiveRecord::Schema.define(version: 2022_05_04_015440) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+=======
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+>>>>>>> 58112bfcc7287f40abdb122bab885700f0e38568
   end
 
 end
