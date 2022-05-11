@@ -1,10 +1,12 @@
 <div class="container">
     <h4 class="mt-4 display-4">User Lists</h4>     
-    <div style="display: flex;justify-content: flex-end; ">  
+    <div style="display: flex;justify-content: flex-end; ">
+
       <%= form_tag users_path, method: :get do %>
         <%= text_field_tag :search, params[:search],placeholder: "Name..." %> 
         <%= submit_tag "Search" %>
       <% end %>
+     
       <%= link_to 'Add', new_user_path , class: "btn btn-success" %>   
     </div>
     <div class="row justify-content-center">

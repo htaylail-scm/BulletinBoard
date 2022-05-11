@@ -1,13 +1,14 @@
 class CreateUsers < ActiveRecord::Migration[6.1]
   def change
     create_table :users do |t|
+
       t.string :name, null: false
-      t.string :email, null: false
+      t.string :email, unique: true, null: false
       t.string :password_digest, null: false
 
       t.string :photo, limit: 255
-      # t.string :role, null: false, limit: 1
-      t.string :role, default: "1"
+      t.string :role, null: false, limit: 1
+
       t.string :phone, limit: 20
       t.string :address, limit: 255
       t.date :dob

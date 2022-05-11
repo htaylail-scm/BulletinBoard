@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
 
+
+    # skip_before_action :authorized, only: [:new, :create]
+    # skip_before_action :AdminAuthorized, except: [:destroy, :index]
+
     def index
         search
         # @search = User.new(params[:search])
         # @users = @search.scope
+       
     end
 
     def show 
@@ -63,6 +68,7 @@ class UsersController < ApplicationController
         @user.destroy
         redirect_to users_path, notice: "User delete Successfully."
     end   
+
 
     def search
         if params[:search]
