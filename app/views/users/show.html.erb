@@ -1,7 +1,7 @@
 <h4 class="mt-4 mb-4 display-4">User Profile</h4>
 <div>
-    <%= link_to "Edit", edit_user_path(@user), class: "btn btn-primary" %>
-    <%= link_to "Change Password", edit_password_path(@user), class: "btn btn-primary" %>
+    <%= link_to "Edit", edit_user_path(@user.id), class: "btn btn-primary" %>
+    <%= link_to "Change Password", edit_password_path(@user.id), class: "btn btn-primary" %>
 </div>
     <div class="col-md-6">
         <label class="col-sm-2 col-form-label"> Name </label>

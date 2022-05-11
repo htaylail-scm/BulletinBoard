@@ -6,6 +6,8 @@ class Post < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true  
 
+  require 'csv'
+
   def self.to_csv(fields = column_names, options = {})
     CSV.generate(options) do |csv|
       csv << fields
@@ -15,12 +17,20 @@ class Post < ApplicationRecord
     end
   end
 
-  def self.upload(file)   
+  def self.upload(file)
     CSV.foreach(file.path, headers: true) do |row|
-      post_hash = row.to_hash
-      post = find_or_create_by!(title: post_hash['title'], description: post_hash['description'])
-      post.update(post_hash)
+      post = find_by(id: row["id"]) || new # if the same id found , create new one
+      post.attributes = row.to_hash.slice(*updatable_attributes) # obtain data from csv file
+      post.save!(validate: false) # save without passing through validation
     end
-  end 
+  end  
+  
+  # set colunm name
+  def self.updatable_attributes
+    ['title', 'description']
+  end
+ 
+
+
 
 end

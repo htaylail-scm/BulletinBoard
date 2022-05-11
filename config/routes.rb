@@ -11,8 +11,6 @@ Rails.application.routes.draw do
 
 
   resources :users
-  # get "sign_up", to: "registrations#new"
-  # post "sign_up", to: "registrations#create"
   get "sign_up", to: "users#new"
   post "sign_up", to: "users#create"
   post 'users/confirm', to: 'users#confirm_create', as: :confirm_user_create
@@ -26,7 +24,7 @@ Rails.application.routes.draw do
   get "password/reset", to: "password_resets#new"
   post "password/reset", to: "password_resets#create"
   get "password/reset/edit", to: "password_resets#edit"
-  post "password/reset/edit", to: "password_resets#update"
+  patch "password/reset/edit", to: "password_resets#update"
   
 
 
@@ -34,10 +32,11 @@ Rails.application.routes.draw do
   post 'posts/confirm', to: 'posts#confirm_create', as: 'confirm_create'
   post 'posts/:id/confirm', to: 'posts#confirm_update', as: 'confirm_update'
 
-  post 'posts', to: 'posts#download', as: 'posts_download'
-  post 'posts/upload', to: 'posts#upload'
+  post 'posts', to: 'posts#download', as: 'download_post'
+  post 'posts/upload', to: 'posts#upload', as: 'upload_post'
 
   get 'posts/search', to: 'posts#search'
+
 
 
 end

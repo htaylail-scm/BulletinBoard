@@ -1,11 +1,9 @@
 class UsersController < ApplicationController
 
     def index
-        if params[:search]
-           @users = User.where(["email LIKE ? ","%#{params[:search]}%"])
-        else
-            @users = User.all
-        end
+        search
+        # @search = User.new(params[:search])
+        # @users = @search.scope
     end
 
     def show 
@@ -39,29 +37,50 @@ class UsersController < ApplicationController
     end
 
 
-    def eidt 
+    def edit
         @user = User.find(params[:id])
-    end
-
+      end
+    
+      def confirm_update
+        @user = User.new(user_update_params)
+        unless @user.valid?
+            render :edit
+        end
+      end
+    
+      def update
+        @user = User.find(params[:id])
+        if @user.update(user_update_params)
+          redirect_to @user
+        else
+          render :edit
+        end
+      end
+    
+  
     def destroy
         @user = User. find(params[:id])
         @user.destroy
         redirect_to users_path, notice: "User delete Successfully."
-    end
+    end   
 
-    def search(search)
-        if search
-            where(["email LIKE ? ","%#{params[:search]}%"])
+    def search
+        if params[:search]
+            @users = User.where(["email LIKE ? OR name LIKE ? ","%#{params[:search]}%","%#{params[:search]}%"])
         else
-            all
+            @users = User.all
         end
     end
-    
+
 
     private
     def user_params
         params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :photo, :create_user_id, :updated_user_id)
     end
+
+    def user_update_params
+        params.require(:user).permit(:name, :email, :role, :phone, :dob, :address, :photo)
+      end
 end
 
 

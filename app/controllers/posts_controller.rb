@@ -3,15 +3,15 @@ class PostsController < ApplicationController
   # def index 
   #   @posts = Post.paginate(page: params[:page], per_page: 10)
   #   # @posts = Post.all
-    # respond_to do |format|
-    #   format.html
-    #   format.csv { send_data @posts.to_csv(['title','description','status'])} 
-    # end
+  #   respond_to do |format|
+  #     format.html
+  #     format.csv { send_data @posts.to_csv(['title','description','status'])} 
+  #   end
   # end
 
   def index
       if params[:search]
-        @posts = Post.where(["email LIKE ? ","%#{params[:search]}%"])
+        @posts = Post.where(["title LIKE ? OR description like?","%#{params[:search]}%","%#{params[:search]}%"])
       else
         @posts = Post.all
       end
@@ -19,10 +19,7 @@ class PostsController < ApplicationController
           format.html
           format.csv { send_data @posts.to_csv(['title','description','status'])} 
       end
-
   end
-
-
  
 
   def show
@@ -44,7 +41,7 @@ class PostsController < ApplicationController
     # post.updated_user_id = Current.user.id
 
     if post.save
-      redirect_to posts_path, notice: "Succeffully Post Created!"
+      redirect_to posts_path, notice: "Successfully Post Created!"
     end
   end
 
@@ -72,31 +69,54 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
-  def search(search)
-    if search
-        where(["title LIKE ? ","%#{params[:search]}%"])
-    else
-        all
-    end
-  end
-
   def download
     @posts = Post.all
     respond_to do |format|
       format.html
-      format.csv { send_data @posts.to_csv(['title','description','status'])} 
+      format.csv { send_data @posts.to_csv(['title','description'])} 
     end
   end
-  
+
   def upload
-    Post.upload(params[:file])
-    redirect_to posts_path, notice: "Posts Uploaded"
-  end  
-    
-  # def search(search)
-  #   @posts = Post.search(params[:search])
-  #   @posts = Post.where("lower(title) LIKE ?", "%#{search.downcase}%")
+    if params[:file].present?
+      Post.upload(params[:file])
+      redirect_to posts_path, notice: "CSV Imported"
+    else
+      redirect_to posts_path, notice: "You need to choose a file first!"
+    end
+  end
+
+  # def import
+  #   Post.import(params[:file])
+  #   redirect_to posts_path
   # end
+
+  # def upload
+  #   updated_user_id = current_user.id
+  #   create_user_id = current_user.id
+  #   if (params[:file].nil?)
+  #       redirect_to upload_posts_path, notice: "Require File"        
+  #   elsif !File.extname(params[:file]).eql?(".csv")
+  #       redirect_to upload_posts_path, notice: "Wrong File Type"  
+  #   else
+  #       error_msg = PostsHelper.check_header(["title", "description", "status"],params[:file])
+  #       if error_msg.present?
+  #           redirect_to upload_posts_path, notice: error_msg
+  #       else 
+  #           Post.import(params[:file],create_user_id,updated_user_id)
+  #           redirect_to posts_path, notice: "Imported Successfully!"
+  #       end
+  #   end
+  # end
+
+  # def search(search)
+  #   if search
+  #       where(["title LIKE ? OR description LIKE ","%#{params[:search]}%","%#{params[:search]}%"])
+  #   else
+  #       all
+  #   end
+  # end 
+
 
   private
   def post_params

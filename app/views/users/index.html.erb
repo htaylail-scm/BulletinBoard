@@ -1,10 +1,11 @@
 <div class="container">
-    <h4 class="mt-4 display-4">User Lists</h4> 
-    <%= link_to 'Add', new_user_path , class: "btn btn-success" %>   
-    <%= form_tag users_path, method: :get do %>
-      <%= text_field_tag :search, params[:search] %> 
-      <%= submit_tag "Search" %>
-    <% end %>
+    <h4 class="mt-4 display-4">User Lists</h4>     
+    <div style="display: flex;justify-content: flex-end; ">  
+      <%= form_tag users_path, method: :get do %>
+        <%= text_field_tag :search, params[:search],placeholder: "Name..." %> 
+        <%= submit_tag "Search" %>
+      <% end %>
+      <%= link_to 'Add', new_user_path , class: "btn btn-success" %>   
     </div>
     <div class="row justify-content-center">
       <table class="table table-bordered">
@@ -24,7 +25,7 @@
         <tbody>
           <% @users.each do |user| %>
             <tr> 
-              <td><%=link_to user.name, user %></td>
+              <td><%=link_to user.name, user%></td>
               <td><%= user.email %></td>
               <td><%= user.create_user_id %></td>
               <td><%= user.phone %></td>
@@ -43,6 +44,10 @@
     </div>
   
 </div>
+
+
+
+
 
 
 
