@@ -6,7 +6,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.text :description, null: false
       t.integer :status, null: false
       
-      t.integer :create_user_id, null: false
+      t.integer :created_user_id, null: false
       t.integer :updated_user_id, null: false
       t.integer :deleted_user_id
       

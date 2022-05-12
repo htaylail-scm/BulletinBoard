@@ -17,7 +17,7 @@ class PostsController < ApplicationController
       end
       respond_to do |format|
           format.html
-          format.csv { send_data @posts.to_csv(['title','description','status'])} 
+          format.csv { send_data @posts.to_csv(['title','description','status','created_user_id','updated_user_id'])} 
       end
   end
  
@@ -35,12 +35,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    post = Post.new(post_params)
-    # @post.status = 1
-    # post.create_user_id = Current.user.id
-    # post.updated_user_id = Current.user.id
+    @post = Post.new(post_params)
+    @post.status = 1
+    @post.created_user_id = current_user.id
+    @post.updated_user_id = current_user.id
 
-    if post.save
+    if @post.save
       redirect_to posts_path, notice: "Successfully Post Created!"
     end
   end
@@ -73,7 +73,7 @@ class PostsController < ApplicationController
     @posts = Post.all
     respond_to do |format|
       format.html
-      format.csv { send_data @posts.to_csv(['title','description'])} 
+      format.csv { send_data @posts.to_csv(['title','description','status','created_user_id','updated_user_id'])} 
     end
   end
 
@@ -86,10 +86,7 @@ class PostsController < ApplicationController
     end
   end
 
-  # def import
-  #   Post.import(params[:file])
-  #   redirect_to posts_path
-  # end
+
 
   # def upload
   #   updated_user_id = current_user.id

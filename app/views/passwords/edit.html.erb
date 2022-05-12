@@ -2,7 +2,7 @@
     margin: auto;">
     <h1>Edit Password </h1>
 
-    <%= form_with model: Current.user, url: edit_password_path do |form| %>
+    <%= form_with model: current_user, url: edit_password_path do |form| %>
         <% if form.object.errors.any? %>
             <div class="alert alert-danger">
                 <% form.object.errors.full_messages.each do |message| %>
@@ -11,7 +11,11 @@
         </div>
         <% end %>
         
-        
+        <div class="col-md-6">
+            <%= form.label :old_password %>
+            <%= form.password_field :old_password, class: "form-control" %>
+        </div>
+            
         <div class="col-md-6">
             <%= form.label :password %>
             <%= form.password_field :password, class: "form-control" %>

@@ -3,12 +3,25 @@
     <div style="display: flex;justify-content: flex-end; ">
 
       <%= form_tag users_path, method: :get do %>
-        <%= text_field_tag :search, params[:search],placeholder: "Name..." %> 
-        <%= submit_tag "Search" %>
+        # form_tag({ :action => :search_user }, { :method => :get })       
+        <%= text_field_tag :name, params[:name], placeholder: "Name..." %>            
+        <%= text_field_tag :email, params[:email], placeholder: "Email..." %>           
+        <%= date_field_tag :from_date, params[:from_date], autocomplete: 'off' %>        
+        <%= date_field_tag :to_date, params[:to_date], autocomplete: 'off' %>    
+        <%= submit_tag ("Search") %>
+        <input type="reset" value="Clear" >       
       <% end %>
-     
-      <%= link_to 'Add', new_user_path , class: "btn btn-success" %>   
+
+      <% if admin? %>
+        <%= link_to 'Add', new_user_path , class: "btn btn-success" %>  
+      <% end %>      
     </div>
+
+    <%= form_tag users_path, method: :get do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Name..." %> 
+      <%= submit_tag "Search" %>
+    <% end %>
+
     <div class="row justify-content-center">
       <table class="table table-bordered">
         <thead>
@@ -21,23 +34,32 @@
             <th scope="col">Address</th>
             <th scope="col">Created Date</th>
             <th scope="col">Updated Date</th>
-            <th scope="col" >Action</th>
+            
+            <% if admin? %>
+              <th>Action</th>
+            <% end %>
           </tr>
         </thead>
         <tbody>
           <% @users.each do |user| %>
             <tr> 
-              <td><%=link_to user.name, user%></td>
+              <td> <%= link_to user.name, user_path(user), {:remote => true, 'data-toggle' =>  "modal"} %> </td>
+              <td> <%= link_to user.name, user %></td>
+             
               <td><%= user.email %></td>
-              <td><%= user.create_user_id %></td>
+              <td><%= user.created_user_id %></td>
               <td><%= user.phone %></td>
               <td><%= user.dob %></td>
               <td><%= user.address %></td>            
               <td> <%= user.created_at.strftime("%Y/%m/%d") %></td>
               <td> <%= user.updated_at.strftime("%Y/%m/%d") %></td>
-              <td><%= link_to "Delete", user_path(user.id),
-                    method: :delete, data: {confirm: "Are you sure?"} %>   
-              </td>
+              <% if admin? %>
+                <td>
+                <%= link_to "Delete", user_path(user.id), method: :delete,
+                data: { confirm: "Are you sure?" } %>
+                </td>
+              <% end %>
+
             </tr>
           <% end %>
         </tbody>
@@ -46,12 +68,3 @@
     </div>
   
 </div>
-
-
-
-
-
-
-
-
-

@@ -41,11 +41,15 @@ ActiveRecord::Schema.define(version: 2022_05_11_102042) do
   end
 
   create_table "posts", charset: "utf8mb3", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.integer "status", default: 1
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.string "title", null: false
+    t.text "description", null: false
+    t.integer "status", null: false
+    t.integer "created_user_id", null: false
+    t.integer "updated_user_id", null: false
+    t.integer "deleted_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
@@ -57,7 +61,7 @@ ActiveRecord::Schema.define(version: 2022_05_11_102042) do
     t.string "phone", limit: 20
     t.string "address"
     t.date "dob"
-    t.bigint "create_user_id", null: false
+    t.bigint "created_user_id", null: false
     t.bigint "updated_user_id", null: false
     t.integer "deleted_user_id"
     t.datetime "created_at", null: false

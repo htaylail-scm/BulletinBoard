@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   delete "user/logout", to: "sessions#destory"
 
 
-
+  # get 'show_modal/:id', to: 'your_controller#show_modal', as: :show_modal_path
   resources :users
   get "sign_up", to: "users#new"
   post "sign_up", to: "users#create"
@@ -34,9 +34,5 @@ Rails.application.routes.draw do
 
   post 'posts', to: 'posts#download', as: 'download_post'
   post 'posts/upload', to: 'posts#upload', as: 'upload_post'
-
-  get 'posts/search', to: 'posts#search'
-
-
 
 end

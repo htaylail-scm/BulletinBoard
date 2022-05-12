@@ -12,7 +12,8 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :phone, limit: 20
       t.string :address, limit: 255
       t.date :dob
-      t.bigint :create_user_id, null: false
+
+      t.bigint :created_user_id, null: false
       t.bigint :updated_user_id, null: false
       t.integer :deleted_user_id
       

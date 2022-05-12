@@ -1,7 +1,7 @@
 class User < ApplicationRecord
     
 
-    # belongs_to :created_user, class_name: "User", foreign_key: "create_user_id"
+    # belongs_to :created_user, class_name: "User", foreign_key: "created_user_id"
     # belongs_to :updated_user, class_name: "User", foreign_key: "updated_user_id"
 
     # virtual attributes for authentication
@@ -14,10 +14,12 @@ class User < ApplicationRecord
    
     # to check old password with new password
      attr_accessor :old_password
+
     # image
-    as_one_attached :profile
+    has_one_attached :photo
 
     # soft delete
     # acts_as_paranoid   
+    
 
 end
