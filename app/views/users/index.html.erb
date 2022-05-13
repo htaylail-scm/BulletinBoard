@@ -1,15 +1,13 @@
 <div class="container">
-    <h4 class="mt-4 display-4">User Lists</h4>     
-    <div style="display: flex;justify-content: flex-end; ">
+    <h4 class="mt-4 display-4">User Lists</h4> 
 
-      <%= form_tag users_path, method: :get do %>
-        # form_tag({ :action => :search_user }, { :method => :get })       
-        <%= text_field_tag :name, params[:name], placeholder: "Name..." %>            
+    <div style="display: flex;justify-content: flex-end; ">
+      <%= form_tag users_path, method: :get do %>   
+        <%= text_field_tag :name, params[:name],  placeholder: "Name..." %>            
         <%= text_field_tag :email, params[:email], placeholder: "Email..." %>           
         <%= date_field_tag :from_date, params[:from_date], autocomplete: 'off' %>        
-        <%= date_field_tag :to_date, params[:to_date], autocomplete: 'off' %>    
-        <%= submit_tag ("Search") %>
-        <input type="reset" value="Clear" >       
+        <%= date_field_tag :to_date, params[:to_date], autocomplete: 'off'  %>    
+        <%= submit_tag ("Search") %> 
       <% end %>
 
       <% if admin? %>
@@ -17,16 +15,12 @@
       <% end %>      
     </div>
 
-    <%= form_tag users_path, method: :get do %>
-      <%= text_field_tag :search, params[:search], placeholder: "Name..." %> 
-      <%= submit_tag "Search" %>
-    <% end %>
-
     <div class="row justify-content-center">
-      <table class="table table-bordered">
+      <table id="table_id" class="table table-bordered">
         <thead>
           <tr>
             <th scope="col">Name</th>
+            <th scope="col">Name test</th>
             <th scope="col">Email</th>
             <th scope="col">Created User</th>
             <th scope="col">Phone</th>
@@ -64,7 +58,7 @@
           <% end %>
         </tbody>
       </table>
-    #  paginate page
+      <%= will_paginate @posts, list_classes: %w(pagination justify-content-center) %>
     </div>
   
 </div>

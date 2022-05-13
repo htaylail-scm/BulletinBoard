@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   get "sign_up", to: "users#new"
   post "sign_up", to: "users#create"
   post 'users/confirm', to: 'users#confirm_create', as: :confirm_user_create
-  post 'users/confirm', to: 'users#confirm_update', as: :confirm_user_update
+  post 'users/:id/confirm', to: 'users#confirm_update', as: :confirm_user_update
+  get "profile", to: "users#show", as: :user_profile
 
 
 
@@ -32,7 +33,8 @@ Rails.application.routes.draw do
   post 'posts/confirm', to: 'posts#confirm_create', as: 'confirm_create'
   post 'posts/:id/confirm', to: 'posts#confirm_update', as: 'confirm_update'
 
-  post 'posts', to: 'posts#download', as: 'download_post'
-  post 'posts/upload', to: 'posts#upload', as: 'upload_post'
+  get 'posts', to: 'posts#download', as: 'download_post'
+  post 'upload', to: 'posts#upload', as: 'upload_post'
+  
 
 end

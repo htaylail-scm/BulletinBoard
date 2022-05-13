@@ -17,7 +17,7 @@ class Post < ApplicationRecord
     end
   end
 
-  def self.upload(file)
+  def self.upload(file,created_user_id,updated_user_id)
     CSV.foreach(file.path, headers: true) do |row|
       post = find_by(id: row["id"]) || new # if the same id found , create new one
       post.attributes = row.to_hash.slice(*updatable_attributes) # obtain data from csv file

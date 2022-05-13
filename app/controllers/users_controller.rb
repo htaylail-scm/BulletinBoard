@@ -5,15 +5,9 @@ class UsersController < ApplicationController
     # skip_before_action :AdminAuthorized, except: [:destroy, :index]
 
     def index
-        search
-        # @search = User.new(params[:search])       
+       search
     end
 
-    # def index
-    #     @search_params = search_params
-    #     @users = User.search(search_params)
-    # end
-  
 
     def show 
         @user = User.find(params[:id])
@@ -45,27 +39,33 @@ class UsersController < ApplicationController
         end      
     end
 
-
     def edit
         @user = User.find(params[:id])
-      end
-    
-      def confirm_update
-        @user = User.new(user_update_params)
-        unless @user.valid?
+    end
+
+    def confirm_update
+        @user = User.find(params[:id])
+        @user.name = user_update_params[:name]
+        @user.email = user_update_params[:email]
+        @user.role = user_update_params[:role]
+        @user.phone = user_update_params[:phone]
+        @user.dob = user_update_params[:dob]
+        @user.address = user_update_params[:address]
+        @user.photo = user_update_params[:photo]
+        if !@user.valid?
             render :edit
         end
-      end
-    
-      def update
+    end
+
+    def update
         @user = User.find(params[:id])
+        @user.updated_user_id = current_user.id
         if @user.update(user_update_params)
-          redirect_to @user
+            redirect_to users_path, notice: "User data Updated"
         else
-          render :edit
+            render :edit
         end
-      end
-    
+    end
   
     def destroy
         @user = User. find(params[:id])
@@ -73,37 +73,27 @@ class UsersController < ApplicationController
         redirect_to users_path, notice: "User delete Successfully."
     end   
 
-
-    def search
-        if params[:search]
-            @users = User.where(["email LIKE ? OR name LIKE ? ","%#{params[:search]}%","%#{params[:search]}%"])
+    def search 
+        from_date = params[:from_date]   
+        to_date = params[:to_date]  
+        name = params[:name]  
+        email = params[:email]     
+        if from_date.present? and to_date.present?
+            @users = User.where("name like ? and email like ? and created_at >= ? and created_at <= ?", "%" + name + "%", "%" + email + "%", from_date, Date.parse(to_date)+1).paginate(page: params[:page], per_page: 3)
+        elsif from_date.present?
+            @users = User.where("name like ? and email like ? and created_at >= ?", "%" + name + "%", "%" + email + "%", from_date).paginate(page: params[:page], per_page: 3)
+        elsif to_date.present?
+            @users = User.where("name like ? and email like ? and created_at <= ?", "%" + name + "%", "%" + email + "%", Date.parse(to_date)+1).paginate(page: params[:page], per_page: 3)
+        elsif name .present?
+            @users = User.where("name like ? and email like ?", "%" + name + "%", "%" + email + "%").paginate(page: params[:page], per_page: 3)
         else
-            @users = User.all
+            @users = User.paginate(page: params[:page], per_page: 3)
         end
     end
-
-    # def search
-    #     @name = search_params[:name]
-    #     @email = search_params[:email]
-    #     @from_date = search_params[:from_date]
-    #     @to_date = search_params[:to_date]
-    #     if @from_date.present? and @to_date.present?
-    #         users = Userwhere("name like ? and email like ? and created_at >= ? and created_at <= ?", "%" + name + "%", "%" + email + "%", from_date, Date.parse(to_date)+1)
-    #     elsif @from_date.present?
-    #         users = User.where("name like ? and email like ? and created_at >= ?", "%" + name + "%", "%" + email + "%", from_date)
-    #     elsif @to_date.present?
-    #         users = User.where("name like ? and email like ? and created_at <= ?", "%" + name + "%", "%" + email + "%", Date.parse(to_date)+1)
-    #     else
-    #         users = User.where("name like ? and email like ?", "%" + name + "%", "%" + email + "%")
-    #     end
-    # end
-
-   
 
 
     private
     def user_params
-        # params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :photo)
         params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :photo, :created_user_id, :updated_user_id)
     end
 
@@ -114,7 +104,5 @@ class UsersController < ApplicationController
     def search_params
         params.permit(:name, :email, :from_date, :to_date)
     end
-
-
 
 end
