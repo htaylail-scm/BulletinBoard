@@ -7,7 +7,8 @@ class User < ApplicationRecord
     # virtual attributes for authentication
     has_secure_password
 
-    # email validation
+    # email validation to test again
+    # validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
     validates :email, presence: true, uniqueness: true, format:  { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/, message: "must be a valid email format" }
     validates :name, :photo, presence: true
     validates :password, confirmation: true, presence: true,on: :create
