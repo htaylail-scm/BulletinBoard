@@ -25,7 +25,7 @@ class PasswordResetsController < ApplicationController
         if @user.update(password_params)
             redirect_to user_login_path, notice: "Your password was reset successfully. Plese sing in."   
         else
-            render editReset
+            redirect_to password_reset_edit_path(token: params[:token]), notice: "New password and confirm password are not same"
         end
     end
 

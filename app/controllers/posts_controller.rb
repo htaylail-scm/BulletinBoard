@@ -2,9 +2,9 @@ class PostsController < ApplicationController
 
   def index
       if params[:search]
-        @posts = Post.where(["title LIKE ? OR description like?","%#{params[:search]}%","%#{params[:search]}%"]).paginate(page: params[:page], per_page: 3)
+        @posts = Post.where(["title LIKE ? OR description like?","%#{params[:search]}%","%#{params[:search]}%"]).paginate(page: params[:page], per_page: 5)
       else
-        @posts = Post.paginate(page: params[:page], per_page: 3)
+        @posts = Post.paginate(page: params[:page], per_page: 5)
       end
       respond_to do |format|
           format.html
@@ -58,11 +58,18 @@ class PostsController < ApplicationController
       render :edit
     end
   end
-  
-  def destroy
+
+  # def destroy
+  #   @post = Post.find(params[:id])
+  #   @post.destroy
+  #   redirect_to posts_path
+  # end
+
+  def destroy   
+    # @post.deleted_user_id = current_user.id
     @post = Post.find(params[:id])
     @post.destroy
-    redirect_to posts_path
+    redirect_to posts_path, notice: "Delete post success."
   end
 
   def download

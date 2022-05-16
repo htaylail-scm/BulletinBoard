@@ -5,15 +5,16 @@ class PasswordsController < ApplicationController
     # skip_before_action :AdminAuthorized, except: []
 
 
+
     # def update
     #     if current_user.authenticate(password_params[:old_password])
     #         if current_user.update(password_params)
     #             redirect_to root_path, notice: "Your password has been changed."
     #         else
-    #             redirect_to edit_password_path, notice: "Something went wrong."
+    #             redirect_to password_path, notice: "Something went wrong."
     #         end
     #     else
-    #         redirect_to edit_password_path, notice: "Your old password is wrong!"
+    #         redirect_to password_path, notice: "Your old password is wrong!"
     #     end
     # end
 

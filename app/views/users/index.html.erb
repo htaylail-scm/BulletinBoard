@@ -50,7 +50,7 @@
                 <td> <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deleteuser_#{user.id}",
                  class: 'btn btn-danger' %>
                 </td>
-                <% end %>
+              <% end %>
 
             </tr>
 
@@ -66,7 +66,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#" data-dismiss="modal" class="btn btn-secondary">Cancel</a>
-                        <%= link_to 'Delete', users_path(user), method: :delete, :class => 'btn btn-primary' %>
+                        <%= link_to 'Delete', user_path(user), method: :delete, :class => 'btn btn-primary' %>
                     </div>
                 </div>
                 </div>
@@ -92,6 +92,11 @@
                       <label class="col-4"><strong>Name : </strong> </label>
                       <%= user.name %>
                     </div>  
+
+                    <div>
+                      <label class="col-4"><strong>Photo : </strong> </label>
+                      <%= user.name %>
+                    </div>  
   
                     <div>
                       <label class="col-4 "><strong>Email : </strong> </label>
@@ -99,8 +104,23 @@
                     </div> 
   
                     <div>
-                      <label class="col-4"><strong>Status : </strong> </label>
+                      <label class="col-4"><strong>Type : </strong> </label>
                       <%= user.role == 1  ? 'User' : 'Admin' %>
+                    </div>
+                    
+                    <div>
+                      <label class="col-4 "><strong>Phone : </strong> </label>
+                      <%= user.phone %>
+                    </div> 
+                    
+                    <div>
+                      <label class="col-4 "><strong>Date Of Birth : </strong> </label>
+                      <%= user.dob %>
+                    </div> 
+
+                    <div>
+                      <label class="col-4 "><strong>Address : </strong> </label>
+                      <%= user.address %>
                     </div> 
   
                                
