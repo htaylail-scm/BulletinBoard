@@ -57,19 +57,16 @@ class PostsController < ApplicationController
     else
       render :edit
     end
-  end
-
-  # def destroy
-  #   @post = Post.find(params[:id])
-  #   @post.destroy
-  #   redirect_to posts_path
-  # end
+  end  
 
   def destroy   
-    # @post.deleted_user_id = current_user.id
     @post = Post.find(params[:id])
+    @post.update(
+      'deleted_at' => Time.now,
+      'deleted_user_id' => current_user.id
+    )
     @post.destroy
-    redirect_to posts_path, notice: "Delete post success."
+    redirect_to posts_path, notice: "Post delete Successfully."
   end
 
   def download

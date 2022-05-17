@@ -68,7 +68,11 @@ class UsersController < ApplicationController
     end
   
     def destroy
-        @user = User. find(params[:id])
+        @user = User.find(params[:id])
+        @user.update(
+            'deleted_at' => Time.now,
+            'deleted_user_id' => current_user.id
+        )
         @user.destroy
         redirect_to users_path, notice: "User delete Successfully."
     end   
@@ -94,12 +98,10 @@ class UsersController < ApplicationController
 
     private
     def user_params
-        # params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :photo)
         params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :phone, :dob, :address, :photo, :created_user_id, :updated_user_id)
     end
 
     def user_update_params
-        # params.require(:user).permit(:name, :email, :role, :phone, :dob, :address, :photo)
         params.require(:user).permit(:name, :email, :role, :phone, :dob, :address, :photo)
     end
 

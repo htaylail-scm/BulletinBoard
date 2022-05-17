@@ -9,6 +9,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.integer :created_user_id, null: false
       t.integer :updated_user_id, null: false
       t.integer :deleted_user_id
+
       
       t.datetime :created_at, null: false
       t.datetime :updated_at, null: false

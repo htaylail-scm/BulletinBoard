@@ -77,13 +77,17 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   host = 'localhost:3000'
   config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
-
+  config.action_mailer.delivery_method = :smt
     config.action_mailer.smtp_settings = {
-      :address              => "smtp.gmail.com"
+      :address              => "smtp.gmail.com",
       :port                 => 587,
-      :user_name            => ENV["MAILER_EMAIL"],
-      :password             => ENV["MAILER_PASSWORD"],
+      # :user_name            => ENV["MAILER_EMAIL"],
+      # :password             => ENV["MAILER_PASSWORD"],
+      :user_name            => 'htaylail.fortest@gmail.com',
+      :password             => 'HL.fortest1',
       :authentication       => "plain",
       :enable_starttls_auto => true
     }
+
+
   end
