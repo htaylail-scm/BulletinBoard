@@ -29,12 +29,22 @@ class User < ApplicationRecord
     # to check old password with new password
     attr_accessor :old_password
 
+
     # image
     has_one_attached :photo
 
     # soft delete
     acts_as_paranoid   
     # acts_as_paranoid, column: 'deleted_at'
+
+
+
+    def self.authenticate(current_user, password)         
+        if current_user.password_hash == BCrypt::Engine.hash_secret(password, current_user.password_salt)  
+            current_user  
+        end  
+    end 
     
 
 end
+

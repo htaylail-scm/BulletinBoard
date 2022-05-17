@@ -34,7 +34,9 @@ Rails.application.routes.draw do
   post 'posts/:id/confirm', to: 'posts#confirm_update', as: 'confirm_update'
 
   get 'posts', to: 'posts#download', as: 'download_post'
-  post 'upload', to: 'posts#upload', as: 'upload_post'
+  post 'posts/upload', to: 'posts#upload', as: 'upload_post'
   
 
+
+ 
 end

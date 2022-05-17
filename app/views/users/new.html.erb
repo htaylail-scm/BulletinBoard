@@ -74,9 +74,8 @@
                 <%= form.file_field :photo, :accept => "image/x-png,image/gif,image/jpeg", class: "form-control", required: true %>
             </div>
             <% if @user.photo.present? %>
-            <div> <%= image_tag(@user.photo) %><div>
-            <% end %>
-           
+                <div> <%= image_tag(@user.photo, :width => 100, :height => 100) %><div>
+            <% end %>           
         </div>
 
         <div class="col-md-6">

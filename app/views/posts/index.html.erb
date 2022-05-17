@@ -22,9 +22,7 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Post Id </th>
-          <th>Post Title 1 </th>
-          <th>Post Title 2</th>
+          <th>Post Title</th>
           <th>Posted Description</th>
           <th>Posted User</th>
           <th>Posted Date</th>
@@ -34,8 +32,6 @@
       <tbody>
         <% @posts.each do |post| %>
           <tr> 
-          <td><%= post.id %></td>
-          <td><%= link_to post.title, post %></td>
           <td><a href="#" data-toggle="modal" data-target="#myModal-<%= post.id %>"><%= post.title %></a></td>
           <td><%= post.description %></td>
           <td><%= post.created_user_id %></td>
@@ -116,9 +112,3 @@
       </tbody>
     </table>
     <%= will_paginate @posts, list_classes: %w(pagination justify-content-center) %>  
-
-
-
-
-
-

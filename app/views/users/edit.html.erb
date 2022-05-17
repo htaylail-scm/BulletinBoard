@@ -11,8 +11,7 @@
     <div class="mb-3 row">
         <%= form.label :photo , class: "col-sm-2 col-form-label" %>
         <div class="col-sm-10">
-            <%= form.file_field :photo, :accept => "image/x-png,image/gif,image/jpeg", class: "form-control" %>
-           
+            <%= form.file_field :photo, :accept => "image/x-png,image/gif,image/jpeg", class: "form-control" %>           
         </div>
     </div>
 
@@ -53,7 +52,7 @@
 
     <div class="mb-3 row">
         <div class="col-sm-10">
-            <%= link_to "Change Password", edit_password_path(@user.id), class: "btn btn-outline-success" %>
+            <%= link_to "Change Password", edit_password_path, class: "btn btn-outline-success" %>
         </div>
     </div>   
 
