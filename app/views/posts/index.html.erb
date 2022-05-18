@@ -6,15 +6,20 @@
   <%= submit_tag "Search" %>
 <% end %>
 
+<% unless current_user.nil? %>
   <%= link_to 'Add', new_post_path , class: "btn btn-success" %>
+<% end %>
+  
   <%= link_to 'Download', download_post_path(format: :csv), class: "btn btn-success" %>
 </div>
 
-<%= form_tag upload_post_path, multipart: true, class: 'form-inline' do %>
-  <div class="form-group">
-    <%= file_field_tag :file %>    
-    <%= submit_tag "Upload", class: "btn btn-success" %>
-  </div>
+<% unless current_user.nil? %>
+  <%= form_tag upload_post_path, multipart: true, class: 'form-inline' do %>
+    <div class="form-group">
+      <%= file_field_tag :file %>    
+      <%= submit_tag "Upload", class: "btn btn-success" %>
+    </div>
+  <% end %>
 <% end %>
 
 
@@ -32,18 +37,23 @@
       <tbody>
         <% @posts.each do |post| %>
           <tr> 
-          <td><a href="#" data-toggle="modal" data-target="#myModal-<%= post.id %>"><%= post.title %></a></td>
-          <td><%= post.description %></td>
-          <td><%= post.created_user_id %></td>
-          <td> <%= post.created_at.strftime("%Y/%m/%d") %></td>               
-          <% if current_user.id == post.created_user_id || admin? %>
-            <td>
-              <%= link_to "Edit", edit_post_path(post), class: 'btn btn-dark' %>
-              <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deletepost_#{post.id}", class: 'btn btn-danger' %></td>
-            </td>
-          <% end %>
+            <td><a href="#" data-toggle="modal" data-target="#myModal-<%= post.id %>"><%= post.title %></a></td>
+            <td><%= post.description %></td>
+            <td><%= post.created_user_id %></td>
+            <td> <%= post.created_at.strftime("%Y/%m/%d") %></td>               
+            <% if current_user.nil? %>
+              <td>
+                <%= link_to "Edit", class: 'btn btn-dark' %>
+                <%= link_to 'Delete', class: 'btn btn-danger' %></td>
+              </td>
+              
+            <% else %>
+              <td>
+                <%= link_to "Edit", edit_post_path(post), class: 'btn btn-dark' %>
+                <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deletepost_#{post.id}", class: 'btn btn-danger' %></td>
+              </td>          
+            <% end %>
           </tr>
-
 
           <!-- Delete Post Modal -->
           <div class="modal fade" id="deletepost_<%= post.id %>">

@@ -1,15 +1,15 @@
 class PostsController < ApplicationController
 
   def index
-      if params[:search]
-        @posts = Post.where(["title LIKE ? OR description like?","%#{params[:search]}%","%#{params[:search]}%"]).paginate(page: params[:page], per_page: 5)
-      else
-        @posts = Post.paginate(page: params[:page], per_page: 5)
-      end
-      respond_to do |format|
-          format.html
-          format.csv { send_data @posts.to_csv(['title','description','status','created_user_id','updated_user_id'])} 
-      end
+    if params[:search]
+      @posts = Post.where(["title LIKE ? OR description like?","%#{params[:search]}%","%#{params[:search]}%"]).paginate(page: params[:page], per_page: 5)
+    else
+      @posts = Post.paginate(page: params[:page], per_page: 5)
+    end
+    respond_to do |format|
+        format.html
+        format.csv { send_data @posts.to_csv(['title','description','status','created_user_id','updated_user_id'])} 
+    end
   end
  
 
