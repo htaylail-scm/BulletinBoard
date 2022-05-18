@@ -7,14 +7,13 @@ class PasswordResetsController < ApplicationController
         if @user.present?
             # send email
             PasswordMailer.with(user: @user).reset.deliver_now
-            redirect_to root_path, notice: "Send link for reset password."
+            redirect_to root_path, notice: "We send reset password link. Please check your email."
         else
             redirect_to password_reset_path, notice: "Cannot found this email."
         end
     end
 
     def edit
-        # @user = User.find_signed(params[:token], purpose: "password_reset")
         @user = User.find_signed!(params[:token], purpose: "password_reset")
         rescue ActiveSupport::MessageVerifier::InvalidSignature
         redirect_to user_login_path, alert: "Your token has expired. Please try again."
@@ -22,8 +21,8 @@ class PasswordResetsController < ApplicationController
 
     def update
         @user = User.find_signed(params[:token], purpose: "password_reset")
-        if @user.update(password_params)
-            redirect_to user_login_path, notice: "Your password was reset successfully. Plese sing in."   
+        if @user.update(reset_password_params)
+            redirect_to user_login_path, notice: "Your password was reset successfully. Plese Sigin."   
         else
             redirect_to password_reset_edit_path(token: params[:token]), notice: "New password and confirm password are not same"
         end
@@ -31,7 +30,7 @@ class PasswordResetsController < ApplicationController
 
     private
 
-    def password_params
+    def reset_password_params
         params.require(:user).permit(:password, :password_confirmation)
     end
     

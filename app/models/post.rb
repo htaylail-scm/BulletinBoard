@@ -5,6 +5,9 @@ class Post < ApplicationRecord
   
   validates :title, presence: true
   validates :description, presence: true 
+  
+  # soft delete
+  acts_as_paranoid   
 
 
   require 'csv'

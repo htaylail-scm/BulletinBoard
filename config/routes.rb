@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post "sign_up", to: "users#create"
   post 'users/confirm', to: 'users#confirm_create', as: :confirm_user_create
   post 'users/:id/confirm', to: 'users#confirm_update', as: :confirm_user_update
-  get "profile", to: "users#show", as: :user_profile
+  get "profile/:id", to: "users#show", as: :user_profile
 
 
 

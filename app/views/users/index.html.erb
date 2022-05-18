@@ -89,7 +89,11 @@
                     <div>
                       <label class="col-4"><strong>Name : </strong> </label>
                       <%= user.name %>
+                      <% if user.photo.present? %>
+                        <div style="margin: 20px 0;"> <%= image_tag(user.photo, :width => 200, :height => 100) %><div>
+                      <% end %> 
                     </div>  
+                   
 
                     <div>
                       <label class="col-4"><strong>Photo : </strong> </label>

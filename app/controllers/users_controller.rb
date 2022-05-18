@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(user_params)
+        @user = User.new(user_params)       
         # @user.role ||= 1 ;
         if current_user.present?
             @user.created_user_id = current_user.id
@@ -50,8 +50,10 @@ class UsersController < ApplicationController
         @user.role = user_update_params[:role]
         @user.phone = user_update_params[:phone]
         @user.dob = user_update_params[:dob]
-        @user.address = user_update_params[:address]
-        @user.photo = user_update_params[:photo]
+        @user.address = user_update_params[:address]        
+        # @user.photo = user_update_params[:photo]
+        # user.avatar.attach(params[:avatar])
+        @user.photo.attach(user_update_params[:photo])
         if !@user.valid?
             render :edit
         end
@@ -102,7 +104,7 @@ class UsersController < ApplicationController
     end
 
     def user_update_params
-        params.require(:user).permit(:name, :email, :role, :phone, :dob, :address, :photo)
+        params.require(:user).permit(:name, :email, :role, :phone, :dob, :address, :photo).select {|x,v| v.present?}
     end
 
     def search_params
