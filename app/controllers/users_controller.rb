@@ -17,13 +17,28 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def confirm_create
-      @user = User.new(user_params)
+  # def create_confirm
+  #   @user = User.new(user_params)
+  #   unless @user.valid?
+  #     render new_user_path      
+  #   end
+  #   if user_params.has_key?(:profile)
+  #     dir = "#{Rails.root}/app/assets/profiles"
+  #     FileUtils.mkdir_p(dir) unless File.directory?(dir)
+  #     profileName = user_params[:name] + "_" + Time.now.strftime('%Y%m%d_%H%M%S') +"." + ActiveStorage::Filename.new(user_params[:profile].original_filename).extension
+  #     File.open(Rails.root.join('app/assets/', 'images', profileName), 'wb') do |f|
+  #       f.write(user_params[:profile].read)
+  #     end
+  #     @user.profile = profileName
+  #   end
+  # end
+
+  def confirm_create    
+    @user = User.new(user_params) 
   end
 
   def create
-    @user = User.new(user_params)       
-    # @user.role ||= 1 ;
+    @user = User.new(user_params) 
     if current_user.present?
       @user.created_user_id = current_user.id
       @user.updated_user_id = current_user.id
@@ -45,18 +60,28 @@ class UsersController < ApplicationController
 
   def confirm_update
     @user = User.find(params[:id])
+    unless (user_update_params[:photo]).nil?    
+      @user.photo.attach(user_update_params[:photo])
+      @user.name = user_update_params[:name]
+      @user.email = user_update_params[:email]
+      @user.role = user_update_params[:role]
+      @user.phone = user_update_params[:phone]
+      @user.dob = user_update_params[:dob]
+      @user.address = user_update_params[:address]  
+    end
     @user.name = user_update_params[:name]
     @user.email = user_update_params[:email]
     @user.role = user_update_params[:role]
     @user.phone = user_update_params[:phone]
     @user.dob = user_update_params[:dob]
-    @user.address = user_update_params[:address]        
-    # @user.photo = user_update_params[:photo]
-    @user.photo.attach(user_update_params[:photo])
-    if !@user.valid?
-        render :edit
+    @user.address = user_update_params[:address]
+
+    unless @user.valid?
+      render :edit
     end
   end
+
+  
 
   def update
     @user = User.find(params[:id])
@@ -70,10 +95,8 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.update(
-        'deleted_at' => Time.now,
-        'deleted_user_id' => current_user.id
-    )
+    @user.deleted_user_id = current_user.id
+    @user.save # @user.update( 'deleted_user_id' => current_user.id )
     @user.destroy
     redirect_to users_path, notice: "User delete Successfully."
   end   

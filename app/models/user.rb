@@ -30,7 +30,7 @@ class User < ApplicationRecord
     has_one_attached :photo
 
     # soft delete
-    acts_as_paranoid   
+    acts_as_paranoid
 
 end
 

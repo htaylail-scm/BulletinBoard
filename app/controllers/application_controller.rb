@@ -37,5 +37,11 @@ class ApplicationController < ActionController::Base
     def AdminAuthorized
       redirect_to root_path unless admin?
     end
+
+    def check_admin
+      unless current_user.role.to_i == 0 
+          redirect_to '/', :alert => "Don't have permission!"
+      end
+    end
     
 end

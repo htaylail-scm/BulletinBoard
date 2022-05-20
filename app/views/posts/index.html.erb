@@ -1,124 +1,125 @@
 <h4 class="mt-4 display-4">Post Lists</h4>
 <div style="display: flex;justify-content: flex-end; ">
   
-<%= form_tag posts_path, method: :get do %>
-  <%= text_field_tag :search, params[:search] %> 
-  <%= submit_tag "Search" %>
-<% end %>
+  <%= form_tag posts_path, method: :get do %>
+    <%= text_field_tag :search, params[:search] %> 
+    <%= submit_tag "Search" %>
+  <% end %>
 
-<% unless current_user.nil? %>
-  <%= link_to 'Add', new_post_path , class: "btn btn-success" %>
-<% end %>
-  
+  <% unless current_user.nil? %>
+    <%= link_to 'Add', new_post_path , class: "btn btn-success" %>
+  <% end %>
+    
   <%= link_to 'Download', download_post_path(format: :csv), class: "btn btn-success" %>
 </div>
 
+<div style="margin-bottom: 10px;">
 <% unless current_user.nil? %>
   <%= form_tag upload_post_path, multipart: true, class: 'form-inline' do %>
     <div class="form-group">
-      <%= file_field_tag :file %>    
+      <%= file_field_tag :file , style: 'width:200px;' %>    
       <%= submit_tag "Upload", class: "btn btn-success" %>
     </div>
   <% end %>
 <% end %>
+</div>
 
 
-<div class="row justify-content-center">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Post Title</th>
-          <th>Posted Description</th>
-          <th>Posted User</th>
-          <th>Posted Date</th>
-          <th colspan="2">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @posts.each do |post| %>
-          <tr> 
-            <td><a href="#" data-toggle="modal" data-target="#myModal-<%= post.id %>"><%= post.title %></a></td>
-            <td><%= post.description %></td>
-            <td><%= post.created_user_id %></td>
-            <td> <%= post.created_at.strftime("%Y/%m/%d") %></td>               
-            <% if current_user.nil? %>
-              <td>
-                <%= link_to "Edit", class: 'btn btn-dark' %>
-                <%= link_to 'Delete', class: 'btn btn-danger' %></td>
-              </td>
-              
-            <% else %>
-              <td>
-                <%= link_to "Edit", edit_post_path(post), class: 'btn btn-dark' %>
-                <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deletepost_#{post.id}", class: 'btn btn-danger' %></td>
-              </td>          
-            <% end %>
-          </tr>
+<table class="table table-bordered text-center">
+  <thead>
+    <tr>
+      <th>Post Title</th>
+      <th>Posted Description</th>
+      <th>Posted User</th>
+      <th>Posted Date</th>
+      <th colspan="2">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr> 
+        <td><a href="#" data-toggle="modal" data-target="#myModal-<%= post.id %>"><%= truncate(post.title, :length => 30) %></a></td>
+        <td><%= post.description %></td>
+        <td><%= post.created_user_id %></td>
+        <td> <%= post.created_at.strftime("%Y/%m/%d") %></td>               
+        <% if current_user.nil? %>
+          <td>
+            <%= link_to "Edit", class: 'btn btn-dark' %>
+            <%= link_to 'Delete', class: 'btn btn-danger' %></td>
+          </td>
+          
+        <% else %>
+          <td>
+            <%= link_to "Edit", edit_post_path(post), class: 'btn btn-dark' %>
+            <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deletepost_#{post.id}", class: 'btn btn-danger' %></td>
+          </td>          
+        <% end %>
+      </tr>
 
-          <!-- Delete Post Modal -->
-          <div class="modal fade" id="deletepost_<%= post.id %>">
-              <div class="modal-dialog">
-              <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Post Delete Confirmation</h5>
-                  </div>
-                  <div class="modal-body">
-                    <p>Are you sure to delete post Id <%= post.id %> ? </p>
-                  </div>
-                  <div class="modal-footer">
-                      <a href="#" data-dismiss="modal" class="btn btn-secondary">Cancel</a>
-                      <%= link_to 'Delete', post_path(post), method: :delete, :class => 'btn btn-primary' %>
-                  </div>
+      <!-- Delete Post Modal -->
+      <div class="modal fade" id="deletepost_<%= post.id %>">
+          <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Post Delete Confirmation</h5>
               </div>
+              <div class="modal-body">
+                <p>Are you sure to delete post Id <%= post.id %> ? </p>
               </div>
-          </div>            
-
-          <!-- Show Post Modal -->
-          <div class="modal fade" id="myModal-<%= post.id %>" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Post Detail</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div>
-                    <label class="col-4"><strong>Title : </strong> </label>
-                    <%= post.title %>
-                  </div>  
-
-                  <div>
-                    <label class="col-4 "><strong>Description : </strong> </label>
-                    <%= post.description %>
-                  </div> 
-
-                  <div>
-                    <label class="col-4"><strong>Status : </strong> </label>
-                    <%= post.status == 1  ? 'Active' : 'Inactive' %>
-                  </div> 
-
-                  <div>
-                    <label class="col-4"><strong>Updated At : </strong> </label>
-                    <%= post.updated_at.strftime("%Y/%m/%d") %>
-                  </div>
-
-                  <div>
-                    <label class="col-4"><strong>Updated User Id : </strong> </label>
-                    <%= post.updated_user_id %>
-                  </div>              
-                </div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+              <div class="modal-footer">
+                  <a href="#" data-dismiss="modal" class="btn btn-secondary">Cancel</a>
+                  <%= link_to 'Delete', post_path(post), method: :delete, :class => 'btn btn-primary' %>
               </div>
+          </div>
+          </div>
+      </div>            
+
+      <!-- Show Post Modal -->
+      <div class="modal fade" id="myModal-<%= post.id %>" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Post Detail</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <label class="col-4"><strong>Title : </strong> </label>
+                <%= post.title %>
+              </div>  
+
+              <div>
+                <label class="col-4 "><strong>Description : </strong> </label>
+                <%= post.description %>
+              </div> 
+
+              <div>
+                <label class="col-4"><strong>Status : </strong> </label>
+                <%= post.status == 1  ? 'Active' : 'Inactive' %>
+              </div> 
+
+              <div>
+                <label class="col-4"><strong>Updated At : </strong> </label>
+                <%= post.updated_at.strftime("%Y/%m/%d") %>
+              </div>
+
+              <div>
+                <label class="col-4"><strong>Updated User Id : </strong> </label>
+                <%= post.updated_user_id %>
+              </div>              
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
+        </div>
+      </div>
 
-        <% end %>
-      </tbody>
-    </table>
-    <%= will_paginate @posts, list_classes: %w(pagination justify-content-center) %>  
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @posts, list_classes: %w(pagination justify-content-center) %>  

@@ -1,6 +1,5 @@
 <div style="max-width: 500px; margin: auto;">
     <h1>Create User or Sing up</h1>
-    
     <%= form_with scope: :user, url: confirm_user_create_path,  local: true do |form| %>
         <% if @user.errors.any? %>
             <div class="alert alert-danger">

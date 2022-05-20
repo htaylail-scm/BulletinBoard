@@ -17,19 +17,6 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  # def create
-  #   @article = Article.new(article_params)
-  #   logger.debug "New article: #{@article.attributes.inspect}"
-  #   logger.debug "Article should be valid: #{@article.valid?}"
-
-  #   if @article.save
-  #     logger.debug "The article was saved and now the user is going to be redirected..."
-  #     redirect_to @article, notice: 'Article was successfully created.'
-  #   else
-  #     render :new, status: :unprocessable_entity
-  #   end
-  # end
-
   def new
     @post = Post.new
   end
@@ -43,28 +30,27 @@ class PostsController < ApplicationController
     @post.status = 1
     @post.created_user_id = current_user.id
     @post.updated_user_id = current_user.id
-
     if @post.save
       redirect_to posts_path, notice: "Successfully Post Created!"
     end
   end
-   
+
   def edit
     @post = Post.find(params[:id])
   end
-  
+
   def confirm_update   
     @post = Post.find_by(params[:id])
     @post.title = post_update_params[:title]
     @post.description = post_update_params[:description]
-    if !@post.valid?
+    unless @post.valid? # if !@post.valid?
       render :edit
     end  
   end
 
   def update
     @post = Post.find(params[:id])  
-    @post.updated_user_id = current_user.id  
+    @post.updated_user_id = current_user.id
     if @post.update(post_update_params)
       redirect_to posts_path, notice: "Post Updated!"
     else
@@ -74,10 +60,8 @@ class PostsController < ApplicationController
 
   def destroy   
     @post = Post.find(params[:id])
-    @post.update(
-      'deleted_at' => Time.now,
-      'deleted_user_id' => current_user.id
-    )
+    @post.deleted_user_id = current_user.id
+    @post.save # @post.update( 'deleted_user_id' => current_user.id )
     @post.destroy
     redirect_to posts_path, notice: "Post delete Successfully."
   end
@@ -96,13 +80,13 @@ class PostsController < ApplicationController
     created_user_id ||= current_user.id
     if params[:file].present?
       if !(params[:file].content_type == "text/csv")
-        redirect_to posts_path, notice: "must csv file"
-      else
+        redirect_to posts_path, alert: "Only csv accept"
+      else       
         Post.upload(params[:file],updated_user_id,created_user_id)
         redirect_to posts_path, notice: "CSV Imported"
       end
     else
-      redirect_to posts_path, notice: "You need to choose a file first!"
+      redirect_to posts_path, alert: "Please choose csv file!"
     end
   end
 
@@ -113,7 +97,6 @@ class PostsController < ApplicationController
 
   def post_update_params
     params.require(:post).permit(:title, :description, :status)
-  end
- 
+  end 
 
 end
