@@ -1,8 +1,12 @@
 class PostsController < ApplicationController
 
+  before_action :authorized, only: [:new, :edit, :destroy]
+
   def index
     if params[:search]
-      @posts = Post.where(["title LIKE ? OR description like?","%#{params[:search]}%","%#{params[:search]}%"]).paginate(page: params[:page], per_page: 5)
+      @posts = Post.where(["title LIKE ? OR description like? OR created_user_id like? OR created_at like?",
+              "%#{params[:search]}%","%#{params[:search]}%","%#{params[:search]}%","%#{params[:search]}%"])
+              .paginate(page: params[:page], per_page: 5)
     else
       @posts = Post.paginate(page: params[:page], per_page: 5)
     end
@@ -31,7 +35,7 @@ class PostsController < ApplicationController
     @post.created_user_id = current_user.id
     @post.updated_user_id = current_user.id
     if @post.save
-      redirect_to posts_path, notice: "Successfully Post Created!"
+      redirect_to posts_path, notice: "Post isCreated!"
     end
   end
 

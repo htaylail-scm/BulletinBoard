@@ -2,14 +2,10 @@ Rails.application.routes.draw do
 
 
   root "main#index"
-  # get "sign_in", to: "sessions#new"
-  # post "sign_in", to: "sessions#create"
   get "user/login", to: "sessions#new"
   post "user/login", to: "sessions#create"
   delete "user/logout", to: "sessions#destory"
 
-
-  # get 'show_modal/:id', to: 'your_controller#show_modal', as: :show_modal_path
   resources :users
   get "sign_up", to: "users#new"
   post "sign_up", to: "users#create"

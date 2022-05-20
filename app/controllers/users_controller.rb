@@ -1,9 +1,5 @@
 class UsersController < ApplicationController
 
-
-  # skip_before_action :authorized, only: [:new, :create]
-  # skip_before_action :AdminAuthorized, except: [:destroy, :index]
-
   def index
     search
   end
@@ -16,22 +12,6 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
-
-  # def create_confirm
-  #   @user = User.new(user_params)
-  #   unless @user.valid?
-  #     render new_user_path      
-  #   end
-  #   if user_params.has_key?(:profile)
-  #     dir = "#{Rails.root}/app/assets/profiles"
-  #     FileUtils.mkdir_p(dir) unless File.directory?(dir)
-  #     profileName = user_params[:name] + "_" + Time.now.strftime('%Y%m%d_%H%M%S') +"." + ActiveStorage::Filename.new(user_params[:profile].original_filename).extension
-  #     File.open(Rails.root.join('app/assets/', 'images', profileName), 'wb') do |f|
-  #       f.write(user_params[:profile].read)
-  #     end
-  #     @user.profile = profileName
-  #   end
-  # end
 
   def confirm_create    
     @user = User.new(user_params) 

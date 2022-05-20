@@ -1,8 +1,9 @@
 <div class="container">
     <h2>Hi <%= params[:user].name %></h2>
     <p>
-    Someone request to reset of your password.<br>
-    It this was you, click the link to reset your password.<br>
-    The link will expire automatically in 15 minutes.</p>
+        Someone request to reset of your password.<br>
+        It this was you, click the link to reset your password.<br>
+        The link will expire automatically in 15 minutes.
+    </p>
     <%= link_to "Reset Password", password_reset_edit_url(token: @token) %>
 </div>

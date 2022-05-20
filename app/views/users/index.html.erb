@@ -10,9 +10,7 @@
         <%= submit_tag ("Search"), class: "btn btn-success" %> 
       <% end %>
 
-      <% if admin? %>
-        <%= link_to 'Add', new_user_path , class: "btn btn-success" %>  
-      <% end %>      
+      <%= link_to 'Add', new_user_path , class: "btn btn-success" %>   
     </div>
 
     <div class="row justify-content-center">
@@ -27,10 +25,7 @@
             <th>Address</th>
             <th>Created Date</th>
             <th>Updated Date</th>
-            
-            <% if admin? %>
-              <th>Action</th>
-            <% end %>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -44,11 +39,9 @@
               <td><%= user.address %></td>            
               <td> <%= user.created_at.strftime("%Y/%m/%d") %></td>
               <td> <%= user.updated_at.strftime("%Y/%m/%d") %></td>
-              <% if admin? %>
-                <td> <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deleteuser_#{user.id}",
-                 class: 'btn btn-danger' %>
-                </td>
-              <% end %>
+              <td> <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deleteuser_#{user.id}",
+                class: 'btn btn-danger' %>
+              </td>
 
             </tr>
 
@@ -92,8 +85,7 @@
                       <% if user.photo.present? %>
                         <div style="margin: 20px 0;"> <%= image_tag(user.photo, :width => 200, :height => 100) %><div>
                       <% end %> 
-                    </div>  
-                   
+                    </div>
 
                     <div>
                       <label class="col-4"><strong>Photo : </strong> </label>
@@ -123,17 +115,16 @@
                     <div>
                       <label class="col-4 "><strong>Address : </strong> </label>
                       <%= user.address %>
-                    </div> 
-  
-                               
+                    </div>                
                   </div>
-  
+                  
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   </div>
                 </div>
               </div>
             </div>
+
           <% end %>
         </tbody>
       </table>

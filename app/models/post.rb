@@ -3,15 +3,12 @@ class Post < ApplicationRecord
   belongs_to :created_user, class_name: "User", foreign_key: "created_user_id"
   belongs_to :updated_user, class_name: "User", foreign_key: "updated_user_id"
 
-
   validates :title, :presence => { message: 'Title is too long (maximum is 255 characters)'},
             :length => { :maximum => 255 }
   validates :description, presence: true 
   
   # soft delete
   acts_as_paranoid 
-  # acts_as_paranoid, column: 'deleted_at'  
-
 
   require 'csv'
 

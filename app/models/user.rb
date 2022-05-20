@@ -14,14 +14,14 @@ class User < ApplicationRecord
 
     validates :password, confirmation: true, presence: true, on: :create
 
-    # PASSWORD_FORMAT = /\A
-    # (?=.{8,})          # Must contain 8 or more characters
-    # (?=.*\d)           # Must contain a digit
-    # (?=.*[a-z])        # Must contain a lower case character
-    # (?=.*[A-Z])        # Must contain an upper case character
-    # (?=.*[[:^alnum:]]) # Must contain a symbol
-    # /x
-    # validates :password, confirmation: true, presence: true, format: { with: PASSWORD_FORMAT }, on: :create 
+    PASSWORD_FORMAT = /\A
+    (?=.{8,})          # Must contain 8 or more characters
+    (?=.*\d)           # Must contain a digit
+    (?=.*[a-z])        # Must contain a lower case character
+    (?=.*[A-Z])        # Must contain an upper case character
+    (?=.*[[:^alnum:]]) # Must contain a symbol
+    /x
+    validates :password, confirmation: true, presence: true, format: { with: PASSWORD_FORMAT }, on: :create 
   
     # to check old password with new password
     attr_accessor :old_password

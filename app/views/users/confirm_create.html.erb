@@ -1,6 +1,5 @@
 <div style="max-width: 500px; margin: auto;">
     <h1>Create User Confirmation</h1>
-    <%= debug @user %>
     <%= form_with model: @user, url: sign_up_path do |form|  %>
         <% if @user.errors.any? %>
             <div class="alert alert-danger">

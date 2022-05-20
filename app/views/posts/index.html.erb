@@ -6,10 +6,7 @@
     <%= submit_tag "Search" %>
   <% end %>
 
-  <% unless current_user.nil? %>
-    <%= link_to 'Add', new_post_path , class: "btn btn-success" %>
-  <% end %>
-    
+  <%= link_to 'Add', new_post_path , class: "btn btn-success" %>    
   <%= link_to 'Download', download_post_path(format: :csv), class: "btn btn-success" %>
 </div>
 
@@ -31,8 +28,8 @@
       <th>Post Title</th>
       <th>Posted Description</th>
       <th>Posted User</th>
-      <th>Posted Date</th>
-      <th colspan="2">Action</th>
+      <th>Posted Date</th>     
+      <th colspan="2">Action</th>         
     </tr>
   </thead>
   <tbody>
@@ -48,12 +45,13 @@
             <%= link_to 'Delete', class: 'btn btn-danger' %></td>
           </td>
           
-        <% else %>
+        <% elsif current_user.id == post.created_user_id || admin? %>
           <td>
             <%= link_to "Edit", edit_post_path(post), class: 'btn btn-dark' %>
             <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deletepost_#{post.id}", class: 'btn btn-danger' %></td>
           </td>          
         <% end %>
+
       </tr>
 
       <!-- Delete Post Modal -->
