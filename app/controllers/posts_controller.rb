@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
 
   before_action :authorized, only: [:new, :edit, :destroy]
+  before_action :correct_user,   only: [:edit, :update, :destroy]
 
   def index
     if params[:search]
@@ -102,5 +103,12 @@ class PostsController < ApplicationController
   def post_update_params
     params.require(:post).permit(:title, :description, :status)
   end 
+
+  def correct_user
+    @post = Post.find(params[:id])
+    if current_user.id != @post.created_user_id
+      redirect_to root_path, alert: "You can't delete this post "
+    end
+  end
 
 end
