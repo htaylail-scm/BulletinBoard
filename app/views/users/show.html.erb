@@ -1,36 +1,38 @@
-<h4 class="mt-4 mb-4 display-4">User Profile</h4>
-<div>
-    <%= link_to "Edit", edit_user_path(@user.id), class: "btn btn-primary" %>
-    <%= link_to "Change Password", edit_password_path(@user.id), class: "btn btn-primary" %>
-</div>
+<div style="max-width: 500px; margin: auto;">
+    <h4>User Profile</h4>
+    <div>
+        <%= link_to "Edit", edit_user_path(@user.id), class: "btn btn-primary" %>
+        <%= link_to "Change Password", edit_password_path(@user.id), class: "btn btn-primary" %>
+    </div>
 
-<div class="col-md-6">
-    <label class="col-sm-2 col-form-label"> Name </label>
-    <%= @user.name %>
-</div>  
-<div class="img">
-    <%= image_tag @user.photo, style: 'height:120px;width:auto;' %> 
-</div>
-    
-<div class="col-md-6">
-    <label class="col-sm-2 col-form-label"> Email </label>
-    <%= @user.email %>
-</div>
-<div class="col-md-6">
-    <label class="col-sm-2 col-form-label"> Type </label>
-    <%= @user.role == "0" ? 'Admin' : 'User'  %>    
-</div>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Name </label>
+        <%= @user.name %>
+    </div>  
+    <div class="img">
+        <%= image_tag @user.photo, style: 'height:120px;width:auto;' %> 
+    </div>
+        
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Email </label>
+        <%= @user.email %>
+    </div>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Type </label>
+        <%= @user.role == "0" ? 'Admin' : 'User'  %>    
+    </div>
 
-<div class="col-md-6">
-    <label class="col-sm-2 col-form-label"> Phone </label>
-    <%= @user.phone %>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Phone </label>
+        <%= @user.phone %>
+    </div>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Date Of Birth </label>
+        <%= @user.dob %>
+    </div>
+    <div class="col-md-6">
+        <label class="col-sm-2 col-form-label"> Address </label>
+        <%= @user.address %>
+    </div>
+    <%= link_to 'Back', users_path, class: "btn btn-primary" %>
 </div>
-<div class="col-md-6">
-    <label class="col-sm-2 col-form-label"> Date Of Birth </label>
-    <%= @user.dob %>
-</div>
-<div class="col-md-6">
-    <label class="col-sm-2 col-form-label"> Address </label>
-    <%= @user.address %>
-</div>
-<%= link_to 'Back', users_path, class: "btn btn-primary" %>
