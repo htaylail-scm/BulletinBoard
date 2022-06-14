@@ -1,7 +1,7 @@
 class PasswordsController < ApplicationController
 
-  skip_before_action :authorized, only: [:update]
-  skip_before_action :check_admin, except: []
+  # skip_before_action :authorized, only: [:update]
+  # skip_before_action :check_admin, except: []
   
   def update
     if current_user.authenticate(password_change_params[:old_password])

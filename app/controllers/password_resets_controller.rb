@@ -1,7 +1,7 @@
 class PasswordResetsController < ApplicationController
 
-  skip_before_action :authorized, only: [:new, :create, :edit, :update]
-  skip_before_action :check_admin, except: []
+  # skip_before_action :authorized, only: [:new, :create, :edit, :update]
+  # skip_before_action :check_admin, except: []
 
   def new 
   end
@@ -16,7 +16,6 @@ class PasswordResetsController < ApplicationController
       redirect_to password_reset_path, notice: "Cannot found this email."
     end
   end
-
 
   def edit
     @user = User.find_signed!(params[:token], purpose: "password_reset")

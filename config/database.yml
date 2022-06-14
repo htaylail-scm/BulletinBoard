@@ -18,5 +18,5 @@ default: &default
 
 development:
   <<: *default
-  database: sample_rails
+  database: rails_bulletiboard
 

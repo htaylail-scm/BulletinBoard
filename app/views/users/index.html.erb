@@ -7,127 +7,125 @@
         <%= text_field_tag :email, params[:email], placeholder: "Email..." %>           
         <%= date_field_tag :from_date, params[:from_date], autocomplete: 'off' %>        
         <%= date_field_tag :to_date, params[:to_date], autocomplete: 'off'  %>    
-        <%= submit_tag ("Search"), class: "btn btn-success" %> 
+        <%= submit_tag ("Search"), class: "btn btn-success", style: "margin: 0 2px;" %> 
       <% end %>
 
       <%= link_to 'Add', new_user_path , class: "btn btn-success" %>   
     </div>
 
-    <div class="row justify-content-center">
-      <table id="table_id" class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Created User</th>
-            <th>Phone</th>
-            <th>Birth Date</th>
-            <th>Address</th>
-            <th>Created Date</th>
-            <th>Updated Date</th>
-            <th>Action</th>
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Created User</th>
+          <th>Phone</th>
+          <th>Birth Date</th>
+          <th>Address</th>
+          <th>Created Date</th>
+          <th>Updated Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>              
+            <td><a href="#" data-toggle="modal" data-target="#myModal-<%= user.id %>"><%= user.name %></a></td>
+            <td><%= user.email %></td>
+            <td><%= user.created_user_id %></td>
+            <td><%= user.phone %></td>
+            <td><%= user.dob %></td>
+            <td><%= user.address %></td>            
+            <td> <%= user.created_at.strftime("%Y/%m/%d") %></td>
+            <td> <%= user.updated_at.strftime("%Y/%m/%d") %></td>
+            <td> <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deleteuser_#{user.id}",
+              class: 'btn btn-danger' %>
+            </td>
+
           </tr>
-        </thead>
-        <tbody>
-          <% @users.each do |user| %>
-            <tr>              
-              <td><a href="#" data-toggle="modal" data-target="#myModal-<%= user.id %>"><%= user.name %></a></td>           
-              <td><%= user.email %></td>
-              <td><%= user.created_user_id %></td>
-              <td><%= user.phone %></td>
-              <td><%= user.dob %></td>
-              <td><%= user.address %></td>            
-              <td> <%= user.created_at.strftime("%Y/%m/%d") %></td>
-              <td> <%= user.updated_at.strftime("%Y/%m/%d") %></td>
-              <td> <%= link_to 'Delete', '#', "data-toggle"=>"modal", "data-target" => "#deleteuser_#{user.id}",
-                class: 'btn btn-danger' %>
-              </td>
 
-            </tr>
-
-            <!-- Delete User Modal -->
-            <div class="modal fade" id="deleteuser_<%= user.id %>">
-                <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                <h5 class="modal-title">User Delete Confirmation</h5>
-                    </div>
-                    <div class="modal-body">
-                    <p>Are you sure want to delete? </p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" data-dismiss="modal" class="btn btn-secondary">Cancel</a>
-                        <%= link_to 'Delete', user_path(user), method: :delete, :class => 'btn btn-primary' %>
-                    </div>
-                </div>
-                </div>
-            </div>
-
-            <!-- Show Post Modal -->
-            <div class="modal fade" id="myModal-<%= user.id %>" role="dialog">
+          <!-- Delete User Modal -->
+          <div class="modal fade" id="deleteuser_<%= user.id %>">
               <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
+              <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Post Detail</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
+              <h5 class="modal-title">User Delete Confirmation</h5>
                   </div>
                   <div class="modal-body">
-                    <div>
-                        <%= link_to "Edit", edit_user_path(user.id), class: "btn btn-primary" %>
-                        <%= link_to "Change Password", edit_password_path(user.id), class: "btn btn-primary" %>
-                    </div>
-                    <div>
-                      <label class="col-4"><strong>Name : </strong> </label>
-                      <%= user.name %>
-                      <% if user.photo.present? %>
-                        <div style="margin: 20px 0;"> <%= image_tag(user.photo, :width => 200, :height => 100) %><div>
-                      <% end %> 
-                    </div>
+                  <p>Are you sure want to delete? </p>
+                  </div>
+                  <div class="modal-footer">
+                      <a href="#" data-dismiss="modal" class="btn btn-secondary">Cancel</a>
+                      <%= link_to 'Delete', user_path(user), method: :delete, :class => 'btn btn-primary' %>
+                  </div>
+              </div>
+              </div>
+          </div>
 
-                    <div>
-                      <label class="col-4"><strong>Photo : </strong> </label>
-                      <%= user.name %>
-                    </div>  
-  
-                    <div>
-                      <label class="col-4 "><strong>Email : </strong> </label>
-                      <%= user.email %>
-                    </div> 
-  
-                    <div>
-                      <label class="col-4"><strong>Type : </strong> </label>
-                      <%= user.role == 1  ? 'User' : 'Admin' %>
-                    </div>
-                    
-                    <div>
-                      <label class="col-4 "><strong>Phone : </strong> </label>
-                      <%= user.phone %>
-                    </div> 
-                    
-                    <div>
-                      <label class="col-4 "><strong>Date Of Birth : </strong> </label>
-                      <%= user.dob %>
-                    </div> 
+          <!-- Show Post Modal -->
+          <div class="modal fade" id="myModal-<%= user.id %>" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Post Detail</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div>
+                      <%= link_to "Edit", edit_user_path(user.id), class: "btn btn-primary" %>
+                      <%= link_to "Change Password", edit_password_path(user.id), class: "btn btn-primary" %>
+                  </div>
+                  <div>
+                    <label class="col-4"><strong>Name : </strong> </label>
+                    <%= user.name %>
+                    <% if user.photo.present? %>
+                      <div style="margin: 20px 0;"> <%= image_tag(user.photo, :width => 200, :height => 100) %><div>
+                    <% end %> 
+                  </div>
 
-                    <div>
-                      <label class="col-4 "><strong>Address : </strong> </label>
-                      <%= user.address %>
-                    </div>                
+                  <div>
+                    <label class="col-4"><strong>Photo : </strong> </label>
+                    <%= user.name %>
+                  </div>  
+
+                  <div>
+                    <label class="col-4 "><strong>Email : </strong> </label>
+                    <%= user.email %>
+                  </div> 
+
+                  <div>
+                    <label class="col-4"><strong>Type : </strong> </label>
+                    <%= user.role == 1  ? 'User' : 'Admin' %>
                   </div>
                   
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  </div>
+                  <div>
+                    <label class="col-4 "><strong>Phone : </strong> </label>
+                    <%= user.phone %>
+                  </div> 
+                  
+                  <div>
+                    <label class="col-4 "><strong>Date Of Birth : </strong> </label>
+                    <%= user.dob %>
+                  </div> 
+
+                  <div>
+                    <label class="col-4 "><strong>Address : </strong> </label>
+                    <%= user.address %>
+                  </div>                
+                </div>
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
+          </div>
 
-          <% end %>
-        </tbody>
-      </table>
-      <%= will_paginate @posts, list_classes: %w(pagination justify-content-center) %>
-    </div> 
+        <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @posts, list_classes: %w(pagination justify-content-center) %> 
 </div>

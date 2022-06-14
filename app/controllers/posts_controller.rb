@@ -7,9 +7,9 @@ class PostsController < ApplicationController
     if params[:search]
       @posts = Post.where(["title LIKE ? OR description like? OR created_user_id like? OR created_at like?",
               "%#{params[:search]}%","%#{params[:search]}%","%#{params[:search]}%","%#{params[:search]}%"])
-              .paginate(page: params[:page], per_page: 5)
+              .paginate(page: params[:page], per_page: 4)
     else
-      @posts = Post.paginate(page: params[:page], per_page: 5)
+      @posts = Post.paginate(page: params[:page], per_page: 4)
     end
     respond_to do |format|
         format.html

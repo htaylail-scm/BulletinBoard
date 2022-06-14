@@ -1,6 +1,12 @@
-<div class="wrapper">
-    <h1> Welcome from Home Page. </h1>    
-    <div> <%= link_to "Login",  user_login_path, class: 'btn btn-primary btn-login' %> </div>   
+<div class="wrapper"> 
+    <% unless logged_in? %>
+        <div> <%= link_to "Login",  user_login_path, class: 'btn btn-primary btn-login' %> </div>
+        <div> <%= link_to "SignUp", new_user_path, class: 'btn btn-primary btn-login' %> </div> 
+    <% end %>
+    <% if logged_in? %>
+        <h3> Welcome Here!</h3>     
+    <% end %>
+
  
 </div>
 

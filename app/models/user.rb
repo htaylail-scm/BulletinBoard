@@ -12,7 +12,6 @@ class User < ApplicationRecord
                      :numericality => true,
                      :length => { :minimum => 10, :maximum => 15 }
 
-    validates :password, confirmation: true, presence: true, on: :create
 
     PASSWORD_FORMAT = /\A
     (?=.{8,})          # Must contain 8 or more characters

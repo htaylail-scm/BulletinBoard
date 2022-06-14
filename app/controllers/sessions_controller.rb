@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
           session[:user_id] = user.id
         end
         redirect_to root_path, notice: "Logged in succefully"
-    else
+      else
         flash[:alert] = "Passwrod is wrong!"
         render :new
       end
@@ -23,7 +23,6 @@ class SessionsController < ApplicationController
       render :new
     end
   end
-
 
   def destory
     session[:user_id] = nil
